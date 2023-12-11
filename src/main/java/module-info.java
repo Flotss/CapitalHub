@@ -6,7 +6,8 @@ module fr.cashcoders.capitalhub {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
+    requires java.sql;
+    requires io.github.cdimascio.dotenv.java;
 
     opens fr.cashcoders.capitalhub to javafx.fxml;
     exports fr.cashcoders.capitalhub;
