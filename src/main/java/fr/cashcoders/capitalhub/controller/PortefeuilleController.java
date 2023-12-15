@@ -1,5 +1,6 @@
 package fr.cashcoders.capitalhub.controller;
 
+import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.model.*;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
@@ -13,18 +14,36 @@ import java.util.Map;
 public class PortefeuilleController {
     private final List<Portefeuille> portefeuilles;
     private final Map<Portefeuille, History> history;
-    private final MainView mainView;
-    private final PortefeuilleDetailsView portefeuilleDetailsView;
-    private final HistoryView historyView;
+
     private Currency currency;
+
+    private final MainView mainView = CapitalHubApp.mainView;
+    private final PortefeuilleDetailsView portefeuilleDetailsView = CapitalHubApp.portefeuilleDetailsView;
+    private final HistoryView historyView = CapitalHubApp.historyView;
 
     public PortefeuilleController() {
         this.portefeuilles = new ArrayList<>();
         this.currency = new Currency("EUR", "Euro", "€");
         this.history = new HashMap<>();
-        this.mainView = new MainView(this);
-        this.portefeuilleDetailsView = new PortefeuilleDetailsView(this);
-        this.historyView = new HistoryView(this);
+
+
+        // Research in database all portefeuilles
+        // For each portefeuille, create a new Portefeuille object
+        // Add it to the list of portefeuilles
+        // Add it to the history map
+
+        // Research in database all transactions
+        // For each transaction, create a new Transaction object
+        // Add it to the portefeuille
+        // Add it to the history map
+
+        // Research in database all events
+        // For each event, create a new Event object
+        // Add it to the history map
+
+        // Research in database all currencies
+        // For each currency, create a new Currency object
+
     }
 
     public void createPortefeuille(String name, String description) {
