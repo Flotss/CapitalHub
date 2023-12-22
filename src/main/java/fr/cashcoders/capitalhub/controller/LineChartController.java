@@ -1,6 +1,5 @@
 package fr.cashcoders.capitalhub.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 
@@ -16,18 +15,19 @@ public class LineChartController {
         this.portefeuilleController = portefeuilleController;
     }
 
-
-    public void handle(ActionEvent event) {
+    @FXML
+    public void initialize() {
         // Refresh data from porteufeuilleController
+        System.out.println("Hello world");
 
         // Serie
         LineChart.Series<String, Integer> series = new LineChart.Series<>();
         series.setName("My portfolio");
 
-        if (!lineChart.getData().isEmpty()) {
-            lineChart.getData().removeAll(lineChart.getData());
-            return;
-        }
+//        if (!lineChart.getData().isEmpty()) {
+//            lineChart.getData().removeAll(lineChart.getData());
+//            return;
+//        }
 
 
         // Add data to serie
@@ -44,5 +44,12 @@ public class LineChartController {
         series.getData().add(new LineChart.Data<>("Nov", 29));
         series.getData().add(new LineChart.Data<>("Dec", 25));
 
+        // Add serie to lineChart
+        lineChart.getData().add(series);
+    }
+
+    @FXML
+    public void refresh() {
+        // Refresh data from porteufeuilleController
     }
 }

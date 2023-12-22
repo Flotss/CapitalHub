@@ -22,7 +22,7 @@
             <Button mnemonicParsing="false" text="Actualiser"/>
         </children>
     </HBox>
-    <LineChart>
+    <LineChart fx:id="lineChart">
         <xAxis>
             <CategoryAxis side="BOTTOM"/>
         </xAxis>
