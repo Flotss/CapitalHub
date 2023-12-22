@@ -16,5 +16,7 @@ module fr.cashcoders.capitalhub {
     requires org.postgresql.jdbc;
 
     opens fr.cashcoders.capitalhub.controller to javafx.fxml;
+    exports fr.cashcoders.capitalhub.controller;
+
 
 }

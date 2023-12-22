@@ -2,7 +2,6 @@ package fr.cashcoders.capitalhub;
 
 import fr.cashcoders.capitalhub.controller.MenuController;
 import fr.cashcoders.capitalhub.controller.PortefeuilleController;
-import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
@@ -16,15 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 public class CapitalHubApp extends Application {
     public static Stage primaryStage;
-    public static int WIDTH = 1500;
-    public static int HEIGHT = 800;
-
 
     public static MainView mainView;
     public static HistoryView historyView;
@@ -32,19 +24,6 @@ public class CapitalHubApp extends Application {
 
 
     public static void changeScene(Parent parent) {
-        DataBaseConnectionSingleton dataBaseConnectionSingleton = DataBaseConnectionSingleton.getInstance();
-        Connection connection = dataBaseConnectionSingleton.getConnection();
-        // make a select * from portefeuille where id = 1
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from portefeuille where idportefeuille = 1");
-            // print
-            preparedStatement.executeQuery();
-            System.out.println(preparedStatement.getResultSet());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
         VBox root = new VBox();
 
         MenuController menuController = new MenuController();
@@ -65,9 +44,14 @@ public class CapitalHubApp extends Application {
 
         root.getChildren().add(pane);
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Now you can get the width and height
+
+        primaryStage.setWidth(root.getWidth());
+        primaryStage.setHeight(root.getHeight());
     }
 
     private void initializeUI() {
