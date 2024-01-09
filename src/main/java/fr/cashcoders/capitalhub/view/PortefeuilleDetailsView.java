@@ -1,16 +1,16 @@
 package fr.cashcoders.capitalhub.view;
 
-import fr.cashcoders.capitalhub.controller.PortefeuilleController;
+import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.model.Observable;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.scene.control.Label;
 
 public class PortefeuilleDetailsView implements Observer {
 
-    private final PortefeuilleController portefeuilleController;
+    private final Model model;
 
-    public PortefeuilleDetailsView(PortefeuilleController portefeuilleController) {
-        this.portefeuilleController = portefeuilleController;
+    public PortefeuilleDetailsView(Model model) {
+        this.model = model;
     }
 
     public void show(Portefeuille portefeuille) {

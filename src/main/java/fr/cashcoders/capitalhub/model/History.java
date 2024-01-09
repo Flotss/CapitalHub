@@ -2,7 +2,6 @@ package fr.cashcoders.capitalhub.model;
 
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,12 @@ public class History implements DBInterface {
     @Override
     public void save() throws SQLException {
         DataBaseConnectionSingleton db = DataBaseConnectionSingleton.getInstance();
-        PreparedStatement preparedStatement = db.getConnection().prepareStatement("INSERT INTO history (description) VALUES (?)");
+//        PreparedStatement preparedStatement = db.getConnection().prepareStatement("INSERT INTO history (description) VALUES (?)");
+
+    }
+
+    @Override
+    public void update() throws SQLException {
 
     }
 

@@ -1,5 +1,15 @@
 package fr.cashcoders.capitalhub.model;
 
 public enum TransactionType {
-    BUY, SELL
+    BUY, SELL;
+
+    public static TransactionType fromString(String type) {
+        if (type.equals("BUY")) {
+            return BUY;
+        } else if (type.equals("SELL")) {
+            return SELL;
+        } else {
+            return null;
+        }
+    }
 }

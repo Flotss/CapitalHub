@@ -1,7 +1,8 @@
 package fr.cashcoders.capitalhub.model;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
-public record Transaction(TransactionType type, LocalDateTime date, BigDecimal price, String symbol) {
+public record Transaction(int id, int idportefeuille, int idaction, double prix, LocalDateTime date,
+                          String codecurrency, TransactionType type) {
 }

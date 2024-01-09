@@ -1,27 +1,38 @@
 package fr.cashcoders.capitalhub.controller;
 
+import fr.cashcoders.capitalhub.model.Portefeuille;
+import fr.cashcoders.capitalhub.view.PortefeuilleView;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class ListPortefeuilleController {
 
     @FXML
-    private VBox listePortefeuille;
+    private VBox vboxPortefeuille;
 
-    private PortefeuilleController portefeuilleController;
+    private Model model;
 
-    public ListPortefeuilleController(PortefeuilleController portefeuilleController) {
-        this.portefeuilleController = portefeuilleController;
+    public ListPortefeuilleController(Model model) {
+        this.model = model;
     }
 
     // INITIALIZATION
     @FXML
     public void initialize() {
-        // Add portefeuille to listPortefeuille
+        refresh();
     }
 
     @FXML
     public void refresh() {
-        // Refresh data from porteufeuilleController
+        vboxPortefeuille.getChildren().clear();
+
+        List<Portefeuille> portefeuilles = model.getPortefeuilles();
+        for (Portefeuille portefeuille : portefeuilles) {
+            PortefeuilleView portefeuilleView = new PortefeuilleView(portefeuille);
+            // Add the PortefeuilleView to the VBox
+            vboxPortefeuille.getChildren().add(portefeuilleView);
+        }
     }
 }

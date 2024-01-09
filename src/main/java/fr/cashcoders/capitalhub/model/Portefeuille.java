@@ -6,16 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Portefeuille implements Observable, DBInterface {
+    private int id;
+    private int idUser;
     private String name;
     private String description;
+    private List<Action> actions;
     private List<Transaction> transactions;
+    private List<Observer> observers = new ArrayList<>();
 
-    private List<Observer> observers = new ArrayList<Observer>();
-
-    public Portefeuille(String name, String description) {
+    public Portefeuille(int id, int idUser, String name, String description) {
+        this.id = id;
+        this.idUser = idUser;
         this.name = name;
         this.description = description;
-        this.transactions = new ArrayList<Transaction>();
+        this.actions = new ArrayList<>();
+        this.transactions = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getIdUser() {
+        return idUser;
     }
 
     public String getName() {
@@ -26,13 +39,20 @@ public class Portefeuille implements Observable, DBInterface {
         return description;
     }
 
+    public List<Action> getActions() {
+        return actions;
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
 
+    public void addAction(Action action) {
+        this.actions.add(action);
+    }
+
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        notify();
     }
 
     @Override
@@ -60,5 +80,22 @@ public class Portefeuille implements Observable, DBInterface {
     @Override
     public void delete() {
 
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Portefeuille{" +
+                "id=" + id +
+                ", idUser=" + idUser +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", actions=" + actions +
+                ", observers=" + observers +
+                '}';
     }
 }

@@ -1,7 +1,7 @@
 package fr.cashcoders.capitalhub;
 
 import fr.cashcoders.capitalhub.controller.MenuController;
-import fr.cashcoders.capitalhub.controller.PortefeuilleController;
+import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
@@ -14,6 +14,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class CapitalHubApp extends Application {
     public static Stage primaryStage;
@@ -55,9 +57,14 @@ public class CapitalHubApp extends Application {
     }
 
     private void initializeUI() {
-        PortefeuilleController portefeuilleController = new PortefeuilleController();
-        mainView = new MainView(portefeuilleController);
-        historyView = new HistoryView(portefeuilleController);
+        Model model = null;
+        try {
+            model = new Model();
+        } catch (SQLException e) {
+            System.err.println("Error with database connection" + e.getMessage());
+        }
+        mainView = new MainView(model);
+        historyView = new HistoryView(model);
         mainView.show();
     }
 
