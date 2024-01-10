@@ -31,7 +31,6 @@ public class ListPortefeuilleController {
         List<Portefeuille> portefeuilles = model.getPortefeuilles();
         for (Portefeuille portefeuille : portefeuilles) {
             PortefeuilleView portefeuilleView = new PortefeuilleView(portefeuille);
-            // Add the PortefeuilleView to the VBox
             vboxPortefeuille.getChildren().add(portefeuilleView);
         }
     }

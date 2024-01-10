@@ -42,25 +42,7 @@ public class LineChartHome {
 
         List<Portefeuille> portefeuilles = model.getPortefeuilles();
         for (Portefeuille portefeuille : portefeuilles) {
-            XYChart.Series<String, Integer> series = new XYChart.Series<>();
-            series.setName(portefeuille.getName());
-
-            // History
-            List<History> history = portefeuille.getHistory();
-            Map<LocalDate, Integer> dateToTotalValue = new HashMap<>();
-
-            for (History h : history) {
-                LocalDate date = h.getDate().toLocalDate();
-                int price = (int) h.getPrice();
-
-                dateToTotalValue.put(date, dateToTotalValue.getOrDefault(date, 0) + price);
-            }
-
-            for (Map.Entry<LocalDate, Integer> entry : dateToTotalValue.entrySet()) {
-                series.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue()));
-            }
-
-            lineChart.getData().add(series);
+            lineChart.getData().add(model.getSeries(portefeuille));
         }
     }
 

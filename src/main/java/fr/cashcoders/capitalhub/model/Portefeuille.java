@@ -2,8 +2,11 @@ package fr.cashcoders.capitalhub.model;
 
 import fr.cashcoders.capitalhub.view.Observer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Portefeuille implements Observable, DBInterface {
     private int id;
@@ -85,6 +88,24 @@ public class Portefeuille implements Observable, DBInterface {
         for (Observer o : this.observers) {
             o.update(this, null);
         }
+    }
+
+    public double getLastValue() {
+        Map<LocalDate, Integer> dateToTotalValue = new HashMap<>();
+        LocalDate lastDate = LocalDate.MIN;
+        for (History h : this.history) {
+            LocalDate date = h.getDate().toLocalDate();
+            int price = (int) h.getPrice();
+
+            dateToTotalValue.put(date, dateToTotalValue.getOrDefault(date, 0) + price);
+
+            if (date.isAfter(lastDate)) {
+                lastDate = date;
+            }
+        }
+
+        // Get the last value, if there is no value, return 0
+        return dateToTotalValue.getOrDefault(lastDate, 0);
     }
 
     @Override

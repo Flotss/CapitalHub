@@ -7,11 +7,15 @@ import fr.cashcoders.capitalhub.model.*;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
+import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
     private final List<Portefeuille> portefeuilles;
@@ -88,5 +92,29 @@ public class Model {
     public List<ActionProduit> getActionsProduit(int index) {
         return portefeuilles.get(index).getActionsProduct();
     }
+
+    public XYChart.Series<String, Integer> getSeries(Portefeuille portefeuille) {
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName(portefeuille.getName());
+
+        // History
+        List<History> history = portefeuille.getHistory();
+        Map<LocalDate, Integer> dateToTotalValue = new HashMap<>();
+
+        for (History h : history) {
+            LocalDate date = h.getDate().toLocalDate();
+            int price = (int) h.getPrice();
+
+            dateToTotalValue.put(date, dateToTotalValue.getOrDefault(date, 0) + price);
+        }
+
+        for (Map.Entry<LocalDate, Integer> entry : dateToTotalValue.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey().toString(), entry.getValue()));
+        }
+
+        return series;
+    }
+
+
 
 }

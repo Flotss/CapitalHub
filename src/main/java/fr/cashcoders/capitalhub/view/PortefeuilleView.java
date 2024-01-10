@@ -1,5 +1,6 @@
 package fr.cashcoders.capitalhub.view;
 
+import fr.cashcoders.capitalhub.model.History;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import fr.cashcoders.capitalhub.model.Transaction;
 import javafx.geometry.Insets;
@@ -8,6 +9,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 public class PortefeuilleView extends HBox {
 
     public PortefeuilleView(Portefeuille portefeuille) {
@@ -15,7 +18,8 @@ public class PortefeuilleView extends HBox {
         this.setSpacing(50);
         Label name = new Label(portefeuille.getName());
         Label description = new Label(portefeuille.getDescription());
-        Label value = new Label(String.valueOf(portefeuille.getTransactions().stream().mapToDouble(Transaction::getPrix).sum()));
+
+        Label value = new Label(portefeuille.getLastValue() + "");
 
         // Création de l'effet de lumière
         Lighting lightEffect = new Lighting();
