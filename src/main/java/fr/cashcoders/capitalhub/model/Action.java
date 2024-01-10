@@ -1,5 +1,7 @@
 package fr.cashcoders.capitalhub.model;
 
+import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
+
 import java.sql.SQLException;
 
 public class Action implements DBInterface {
@@ -12,9 +14,17 @@ public class Action implements DBInterface {
         this.name = name;
         this.id = id;
         this.price = price;
+
+        if (this.id == 0) {
+            try {
+                save();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
@@ -31,22 +41,49 @@ public class Action implements DBInterface {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price) throws SQLException {
         this.price = price;
+        update();
     }
 
     @Override
     public void save() throws SQLException {
+        String query = "INSERT INTO action (id, name, value) VALUES (DEFAULT, ?, ?) " +
+                "ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, value = EXCLUDED.value " +
+                "RETURNING id;";
 
+        try (var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setDouble(2, this.price);
+
+            var resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                this.id = resultSet.getInt("id");
+            }
+        }
     }
+
 
     @Override
     public void update() throws SQLException {
-
+        DataBaseConnectionSingleton db = DataBaseConnectionSingleton.getInstance();
+        String query = "UPDATE action SET name = ?, value = ? WHERE id = ?;";
+        try (var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setDouble(2, this.price);
+            preparedStatement.setInt(3, this.id);
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
     public void delete() throws SQLException {
-
+        DataBaseConnectionSingleton db = DataBaseConnectionSingleton.getInstance();
+        String query = "DELETE FROM action WHERE id = ?;";
+        try (var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, this.id);
+            preparedStatement.executeUpdate();
+        }
     }
 }

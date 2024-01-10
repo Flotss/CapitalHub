@@ -15,7 +15,7 @@ public class PortefeuilleView extends HBox {
         this.setSpacing(50);
         Label name = new Label(portefeuille.getName());
         Label description = new Label(portefeuille.getDescription());
-        Label value = new Label(String.valueOf(portefeuille.getTransactions().stream().mapToDouble(Transaction::prix).sum()));
+        Label value = new Label(String.valueOf(portefeuille.getTransactions().stream().mapToDouble(Transaction::getPrix).sum()));
 
         // Création de l'effet de lumière
         Lighting lightEffect = new Lighting();

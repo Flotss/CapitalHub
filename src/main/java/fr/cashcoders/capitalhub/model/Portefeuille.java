@@ -10,8 +10,10 @@ public class Portefeuille implements Observable, DBInterface {
     private int idUser;
     private String name;
     private String description;
-    private List<Action> actions;
+    private List<ActionProduit> actionsProducts;
     private List<Transaction> transactions;
+    private List<History> history;
+
     private List<Observer> observers = new ArrayList<>();
 
     public Portefeuille(int id, int idUser, String name, String description) {
@@ -19,8 +21,13 @@ public class Portefeuille implements Observable, DBInterface {
         this.idUser = idUser;
         this.name = name;
         this.description = description;
-        this.actions = new ArrayList<>();
+        this.actionsProducts = new ArrayList<>();
         this.transactions = new ArrayList<>();
+        this.history = new ArrayList<>();
+
+        if (this.id == 0) {
+            this.save();
+        }
     }
 
     public int getId() {
@@ -39,20 +46,28 @@ public class Portefeuille implements Observable, DBInterface {
         return description;
     }
 
-    public List<Action> getActions() {
-        return actions;
+    public List<ActionProduit> getActionsProduct() {
+        return actionsProducts;
     }
 
     public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void addAction(Action action) {
-        this.actions.add(action);
+    public List<History> getHistory() {
+        return history;
+    }
+
+    public void addActionProduit(ActionProduit action) {
+        this.actionsProducts.add(action);
     }
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
+    }
+
+    public void addHistory(History history) {
+        this.history.add(history);
     }
 
     @Override
@@ -74,12 +89,46 @@ public class Portefeuille implements Observable, DBInterface {
 
     @Override
     public void save() {
+        String query = "INSERT INTO portefeuille (idUser, name, description) VALUES (?, ?, ?) " +
+                "ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description " +
+                "RETURNING id;";
 
+        try (var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, this.idUser);
+            preparedStatement.setString(2, this.name);
+            preparedStatement.setString(3, this.description);
+
+
+            var resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                this.id = resultSet.getInt("id"); // Retrieve the ID from the result set
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     @Override
     public void delete() {
+        transactions.forEach(transaction -> {
+            try {
+                transaction.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
+
+        String query = "DELETE FROM portefeuille WHERE id = ?;";
+        try (var preparedStement = connection.prepareStatement(query)) {
+            preparedStement.setInt(1, this.id);
+            preparedStement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -94,7 +143,7 @@ public class Portefeuille implements Observable, DBInterface {
                 ", idUser=" + idUser +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", actions=" + actions +
+                ", actions=" + actionsProducts +
                 ", observers=" + observers +
                 '}';
     }

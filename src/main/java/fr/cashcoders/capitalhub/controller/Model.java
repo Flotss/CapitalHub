@@ -1,7 +1,7 @@
 package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
-import fr.cashcoders.capitalhub.controller.utils.LoadDataBase;
+import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
 import fr.cashcoders.capitalhub.model.*;
 import fr.cashcoders.capitalhub.view.HistoryView;
@@ -11,13 +11,10 @@ import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Model {
     private final List<Portefeuille> portefeuilles;
-    private final Map<Portefeuille, History> history;
 
     private Currency currency;
     private List<Currency> currencies;
@@ -29,15 +26,12 @@ public class Model {
 
     public Model() throws SQLException {
         this.portefeuilles = new ArrayList<>();
-        this.history = new HashMap<>();
         this.currencies = new ArrayList<>();
 
-        LoadDataBase.load(portefeuilles, history, currencies, connection);
-//        this.currency = currencies.get(0);
+        DatabaseFeeder.load(portefeuilles, currencies, connection);
+//        this.currency = currencies.get(0); // ! TODO : REGARDER çA
 
         System.out.println("Portefeuilles: " + portefeuilles + " 1 ;" + portefeuilles.get(0) + "\n");
-
-        System.out.println("History: " + history);
     }
 
 //    public void createPortefeuille(String name, String description) {
@@ -58,13 +52,6 @@ public class Model {
 //        portefeuilles.add(clone);
 //        this.addEvent(new Event("Portefeuille " + portefeuille.getName() + " cloned"), portefeuille);
 //    }
-
-    public void addEvent(Event event, Portefeuille portefeuille) {
-        if (!history.containsKey(portefeuille)) {
-            history.put(portefeuille, new History());
-        }
-        history.get(portefeuille).addEvent(event);
-    }
 
     public void showMainView() {
         mainView.show();
@@ -90,21 +77,16 @@ public class Model {
         this.currency = currency;
     }
 
-    public Map<Portefeuille, History> getHistory() {
-        return history;
+    public List<History> getHistory(Portefeuille portefeuille) {
+        return portefeuille.getHistory();
     }
 
-    public History getHistory(Portefeuille portefeuille) {
-        return history.get(portefeuille);
+    public List<ActionProduit> getActionsProduits(Portefeuille portefeuille) {
+        return portefeuille.getActionsProduct();
     }
 
-    public List<Action> getTransactions(Portefeuille portefeuille) {
-        return portefeuille.getActions();
+    public List<ActionProduit> getActionsProduit(int index) {
+        return portefeuilles.get(index).getActionsProduct();
     }
-
-    public List<Action> getTransactions(int index) {
-        return portefeuilles.get(index).getActions();
-    }
-
 
 }
