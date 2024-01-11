@@ -3,9 +3,9 @@ package fr.cashcoders.capitalhub.model;
 import java.sql.SQLException;
 
 public class ActionProduit implements DBInterface {
-    private Action action;
-    private Portefeuille portefeuille;
-    private int quantity;
+    private final Action action;
+    private final Portefeuille portefeuille;
+    private final int quantity;
 
     public ActionProduit(Action action, Portefeuille portefeuille, int quantity) {
         this.portefeuille = portefeuille;

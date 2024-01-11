@@ -12,7 +12,7 @@ public class ListPortefeuilleController {
     @FXML
     private VBox vboxPortefeuille;
 
-    private Model model;
+    private final Model model;
 
     public ListPortefeuilleController(Model model) {
         this.model = model;

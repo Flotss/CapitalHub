@@ -1,6 +1,5 @@
 package fr.cashcoders.capitalhub.model;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -8,10 +7,10 @@ import java.time.LocalDateTime;
 
 public class History implements DBInterface {
     private int id;
-    private Portefeuille portefeuille;
-    private Action action;
-    private double price;
-    private LocalDateTime date;
+    private final Portefeuille portefeuille;
+    private final Action action;
+    private final double price;
+    private final LocalDateTime date;
 
 
     public History(int id, Portefeuille portefeuille, Action action, double price, LocalDateTime date) {
@@ -49,8 +48,6 @@ public class History implements DBInterface {
             }
         }
     }
-
-
 
 
     @Override

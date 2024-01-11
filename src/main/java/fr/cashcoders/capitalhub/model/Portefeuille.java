@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class Portefeuille implements Observable, DBInterface {
     private int id;
-    private int idUser;
-    private String name;
-    private String description;
-    private List<ActionProduit> actionsProducts;
-    private List<Transaction> transactions;
-    private List<History> history;
+    private final int idUser;
+    private final String name;
+    private final String description;
+    private final List<ActionProduit> actionsProducts;
+    private final List<Transaction> transactions;
+    private final List<History> history;
 
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     public Portefeuille(int id, int idUser, String name, String description) {
         this.id = id;
@@ -129,7 +129,6 @@ public class Portefeuille implements Observable, DBInterface {
             e.printStackTrace();
         }
     }
-
 
 
     @Override

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class DatabaseFeeder {
 
-    private static Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
+    private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
 
     public static void load(List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading database...");

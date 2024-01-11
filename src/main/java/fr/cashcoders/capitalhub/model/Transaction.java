@@ -1,16 +1,18 @@
 package fr.cashcoders.capitalhub.model;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Transaction implements DBInterface {
     private int id;
-    private Portefeuille portefeuille;
-    private Action action;
-    private double prix;
-    private LocalDateTime date;
-    private String codecurrency;
-    private TransactionType type;
+    private final Portefeuille portefeuille;
+    private final Action action;
+    private final double prix;
+    private final LocalDateTime date;
+    private final String codecurrency;
+    private final TransactionType type;
 
     public Transaction(int id, Portefeuille portefeuille, Action action, double prix, LocalDateTime date,
                        String codecurrency, TransactionType type) {

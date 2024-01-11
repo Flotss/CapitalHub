@@ -1,15 +1,10 @@
 package fr.cashcoders.capitalhub.view;
 
-import fr.cashcoders.capitalhub.model.History;
 import fr.cashcoders.capitalhub.model.Portefeuille;
-import fr.cashcoders.capitalhub.model.Transaction;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.layout.HBox;
-
-import java.util.List;
 
 public class PortefeuilleView extends HBox {
 
@@ -36,16 +31,6 @@ public class PortefeuilleView extends HBox {
         // Suppression de l'effet de lumière au HBox si on quitte le hover
         this.setOnMouseExited(event -> {
             this.setEffect(null);
-        });
-
-        // Ajout de l'effet de lumière au HBox si on clique
-        this.setOnMouseClicked(event -> {
-            DropShadow dropShadow = new DropShadow();
-            dropShadow.setRadius(5.0);
-            dropShadow.setOffsetX(3.0);
-            dropShadow.setOffsetY(3.0);
-            dropShadow.setSpread(0.5);
-            this.setEffect(dropShadow);
         });
 
 

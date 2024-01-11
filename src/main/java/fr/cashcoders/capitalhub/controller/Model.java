@@ -3,7 +3,10 @@ package fr.cashcoders.capitalhub.controller;
 import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
-import fr.cashcoders.capitalhub.model.*;
+import fr.cashcoders.capitalhub.model.ActionProduit;
+import fr.cashcoders.capitalhub.model.Currency;
+import fr.cashcoders.capitalhub.model.History;
+import fr.cashcoders.capitalhub.model.Portefeuille;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
@@ -19,14 +22,12 @@ import java.util.Map;
 
 public class Model {
     private final List<Portefeuille> portefeuilles;
-
-    private Currency currency;
-    private List<Currency> currencies;
-
     private final MainView mainView = CapitalHubApp.mainView;
     private final PortefeuilleDetailsView portefeuilleDetailsView = CapitalHubApp.portefeuilleDetailsView;
     private final HistoryView historyView = CapitalHubApp.historyView;
-    private Connection connection = DataBaseConnectionSingleton.getInstance().getConnection();
+    private final List<Currency> currencies;
+    private final Connection connection = DataBaseConnectionSingleton.getInstance().getConnection();
+    private Currency currency;
 
     public Model() throws SQLException {
         this.portefeuilles = new ArrayList<>();
@@ -114,7 +115,6 @@ public class Model {
 
         return series;
     }
-
 
 
 }
