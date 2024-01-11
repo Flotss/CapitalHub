@@ -62,7 +62,7 @@ public class DatabaseFeeder {
         ResultSet actionProduitResultSet = actionProduitStatement.executeQuery();
         while (actionProduitResultSet.next()) {
             int actionId = actionProduitResultSet.getInt("idaction");
-            int quantity = actionProduitResultSet.getInt("quantity");
+            double quantity = actionProduitResultSet.getDouble("quantity");
 
             PreparedStatement actionStatement = connection.prepareStatement("SELECT * FROM action WHERE id = ?");
             actionStatement.setInt(1, actionId);

@@ -90,6 +90,15 @@ VALUES (1, 2, 1100, '2024-01-03 10:00:00');
 INSERT INTO History (idPortefeuille, idAction, price, date)
 VALUES (1, 2, 1000, '2024-01-04 10:00:00');
 
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (1, 2, 1000, '2024-01-12 10:54:00');
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (1, 2, 1200, '2024-01-12 11:54:00');
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (1, 3, 5000, '2024-01-12 10:54:00');
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (1, 3, 4000, '2024-01-12 14:54:00');
+
 
 
 -- Variation du prix d'Apple pour le Portefeuille 2

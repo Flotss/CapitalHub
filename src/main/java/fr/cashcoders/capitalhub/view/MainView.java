@@ -17,8 +17,7 @@ public class MainView implements Observer {
     }
 
     public void show() {
-        // LIne cart fXML
-        System.out.println(getClass().getResource(""));
+        // Line cart fXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LineChartHome.fxml"));
         loader.setController(new LineChartHome(model));
 

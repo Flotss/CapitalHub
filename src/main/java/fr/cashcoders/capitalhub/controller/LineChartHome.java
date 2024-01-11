@@ -11,6 +11,7 @@ public class LineChartHome {
     private final Model model;
     @FXML
     private LineChart<String, Integer> lineChart;
+    private String filter = "year";
 
     public LineChartHome(Model model) {
         this.model = model;
@@ -18,11 +19,7 @@ public class LineChartHome {
 
     @FXML
     public void initialize() {
-
-
-        // Serie
         refresh();
-
     }
 
     @FXML
@@ -33,8 +30,29 @@ public class LineChartHome {
 
         List<Portefeuille> portefeuilles = model.getPortefeuilles();
         for (Portefeuille portefeuille : portefeuilles) {
-            lineChart.getData().add(model.getSeries(portefeuille));
+            lineChart.getData().add(model.getSeries(portefeuille, filter));
         }
+
+    }
+
+
+    private void setFilter(String filter) {
+        if (this.filter.equals(filter)) return;
+
+        this.filter = filter;
+        refresh();
+    }
+
+    public void filterDay() {
+        setFilter("day");
+    }
+
+    public void filterMonth() {
+        setFilter("month");
+    }
+
+    public void filterYear() {
+        setFilter("year");
     }
 
 }

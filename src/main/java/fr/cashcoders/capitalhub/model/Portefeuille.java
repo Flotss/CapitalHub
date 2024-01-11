@@ -9,15 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Portefeuille implements Observable, DBInterface {
-    private int id;
     private final int idUser;
     private final String name;
     private final String description;
     private final List<ActionProduit> actionsProducts;
     private final List<Transaction> transactions;
     private final List<History> history;
-
     private final List<Observer> observers = new ArrayList<>();
+    private int id;
 
     public Portefeuille(int id, int idUser, String name, String description) {
         this.id = id;
@@ -106,6 +105,10 @@ public class Portefeuille implements Observable, DBInterface {
 
         // Get the last value, if there is no value, return 0
         return dateToTotalValue.getOrDefault(lastDate, 0);
+    }
+
+    public double getValeur() {
+        return getLastValue();
     }
 
     @Override

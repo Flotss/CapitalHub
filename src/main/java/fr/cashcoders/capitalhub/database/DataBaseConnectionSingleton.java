@@ -16,7 +16,7 @@ public class DataBaseConnectionSingleton {
 
     private DataBaseConnectionSingleton() {
         try {
-            Class.forName("org.postgresql.Driver"); // ! Warning:(19, 27) The module 'fr.cashcoders.capitalhub' does not have the module 'org.postgresql.jdbc' in requirements
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(POSTGRES_URL, POSTGRES_USER, POSTGRES_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -35,6 +35,6 @@ public class DataBaseConnectionSingleton {
     }
 
     public Connection getConnection() {
-        return connection;
+        return getInstance().connection;
     }
 }

@@ -50,10 +50,8 @@ public class CapitalHubApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Now you can get the width and height
-
-        primaryStage.setWidth(root.getWidth());
-        primaryStage.setHeight(root.getHeight());
+        primaryStage.setWidth(625);
+        primaryStage.setHeight(root.getHeight() + menuBar.getHeight());
     }
 
     private void initializeUI() {

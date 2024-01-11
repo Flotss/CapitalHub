@@ -10,7 +10,7 @@
     <top>
         <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label style="-fx-font-weight: bold;" text="Liste Portefeuille">
+                <Label style="-fx-font-weight: bold;" text="Liste Actions">
                     <cursor>
                         <Cursor fx:constant="DEFAULT"/>
                     </cursor>
@@ -27,10 +27,10 @@
     <bottom>
         <VBox prefHeight="323.0" prefWidth="580.0" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane fx:id="scrollPanePortefeuille" prefHeight="319.0" prefWidth="580.0">
+                <ScrollPane fx:id="scrollPanePortefeuille" prefHeight="319.0" prefWidth="573.0">
                     <content>
-                        <TableView fx:id="tableViewPortefeuille" maxHeight="-Infinity" maxWidth="-Infinity"
-                                   minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="578.0">
+                        <TableView fx:id="tableViewActions" maxHeight="-Infinity" maxWidth="-Infinity"
+                                   minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="577.0">
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                             </columnResizePolicy>
