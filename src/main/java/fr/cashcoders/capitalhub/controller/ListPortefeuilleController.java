@@ -60,7 +60,6 @@ public class ListPortefeuilleController {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                     Portefeuille clickedRow = row.getItem();
-                    System.out.println(clickedRow);
                     // Handle the click event here
                     PortefeuilleDetailsView portefeuilleDetailsView = new PortefeuilleDetailsView(model, clickedRow);
                     portefeuilleDetailsView.show();

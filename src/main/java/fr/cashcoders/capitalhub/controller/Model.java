@@ -1,6 +1,9 @@
 package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
+import fr.cashcoders.capitalhub.controller.Aggregator.DataAggregator;
+import fr.cashcoders.capitalhub.controller.Filter.FilterFactory;
+import fr.cashcoders.capitalhub.controller.Filter.FilterStrategy;
 import fr.cashcoders.capitalhub.controller.utils.APIActionScheduler;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
@@ -12,15 +15,10 @@ import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static fr.cashcoders.capitalhub.model.Period.*;
 
 public class Model {
 
@@ -101,81 +99,9 @@ public class Model {
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         series.setName(portefeuille.getName());
 
-        List<History> history = portefeuille.getHistory();
-        Map<LocalDateTime, Integer> dayToTotalValue = new HashMap<>();
-        Map<LocalDateTime, Integer> monthToTotalValue = new HashMap<>();
-        Map<LocalDate, Integer> yearToTotalValue = new HashMap<>();
-
-
-        // Agrégation des données
-        for (History h : history) {
-            LocalDateTime date = h.getDate();
-            int price = (int) h.getPrice();
-
-            if (date.getDayOfYear() == LocalDate.now().getDayOfYear() && date.getYear() == LocalDate.now().getYear()) {  // VOIR TOUT LA JOURNEE AVEC TOUS LES HEURES
-                date = date.withMinute(0).withSecond(0).withNano(0);
-                dayToTotalValue.put(date, dayToTotalValue.getOrDefault(date, 0) + price);
-            }
-
-            if (date.getYear() == LocalDate.now().getYear() && date.getMonth() == LocalDate.now().getMonth()) { // VOIR TOUT LES JOURS DU MOIS
-                date = date.withHour(0).withMinute(0).withSecond(0).withNano(0); // ON PEUT L'IGNORER CAR LORS DE LA CREATION DE L'HISTORIQUE, ON NE PREND PAS EN COMPTE LES HEURES
-                monthToTotalValue.put(date, monthToTotalValue.getOrDefault(date, 0) + price);
-            }
-
-            if (date.getYear() == LocalDate.now().getYear()) { // VOIR TOUT LES MOIS DE L'ANNEE AVEC TOUTES LES MOIS
-                date = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0); // ON PEUT L'IGNORER CAR LORS DE LA CREATION DE L'HISTORIQUE, ON NE PREND PAS EN COMPTE LES HEURES
-                yearToTotalValue.put(date.toLocalDate(), yearToTotalValue.getOrDefault(date.toLocalDate(), 0) + price);
-            }
-        }
-
-
-        int lastValue = 0;
-        // Construction des données pour la série
-        if (DAY.equals(filter)) {
-            LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
-            LocalDateTime tomorrow = today.withHour(23);
-
-            // Parcourir chaque heure de la journée actuelle
-            for (LocalDateTime date = today; date.isBefore(tomorrow); date = date.plusHours(1)) {
-                int valueHours = dayToTotalValue.getOrDefault(date, lastValue);
-                series.getData().add(new XYChart.Data<>(date.getHour() + "h", valueHours));
-
-                if (valueHours != 0 && valueHours != lastValue) {
-                    lastValue = valueHours;
-                }
-                System.out.println("Hour : " + date.getHour() + " / " + date.getMinute() + " : " + valueHours);
-            }
-        } else if (MONTH.equals(filter)) {
-            LocalDateTime today = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(lastValue);
-            LocalDateTime endDate = today.with(TemporalAdjusters.lastDayOfMonth());
-
-            System.out.println("Today : " + today.getDayOfMonth());
-            System.out.println("End : " + endDate.getDayOfMonth());
-
-            for (LocalDateTime date = today; !date.isAfter(endDate); date = date.plusDays(1)) {
-                int valueDay = monthToTotalValue.getOrDefault(date, lastValue);
-
-                series.getData().add(new XYChart.Data<>(date.getDayOfMonth() + "/" + date.getMonthValue(), monthToTotalValue.getOrDefault(date, lastValue)));
-
-                if (valueDay != 0) {
-                    lastValue = valueDay;
-                }
-            }
-
-        } else if (YEAR.equals(filter)) {
-            LocalDate startDate = LocalDate.now().withMonth(1).withDayOfMonth(1);
-            LocalDate endDate = LocalDate.now().withMonth(12).withDayOfMonth(1);
-
-            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusMonths(1)) {
-                String monthLabel = date.getMonth().toString();
-                int valueMonth = yearToTotalValue.getOrDefault(date, lastValue);
-                series.getData().add(new XYChart.Data<>(monthLabel, yearToTotalValue.getOrDefault(date, lastValue)));
-
-                if (valueMonth != 0) {
-                    lastValue = valueMonth;
-                }
-            }
-        }
+        FilterStrategy filterStrategy = FilterFactory.getFilter(filter);
+        DataAggregator dataAggregator = new DataAggregator();
+        series = dataAggregator.getSeries(portefeuille, filterStrategy);
 
         return series;
     }

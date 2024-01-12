@@ -2,6 +2,7 @@ package fr.cashcoders.capitalhub.controller.utils;
 
 import fr.cashcoders.capitalhub.controller.Model;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,12 @@ public class APIActionScheduler {
 
     public void run() {
         executor.schedule(() -> {
-            Map<String, Double> actions = fetch();
+            Map<String, Double> actions = null;
+            try {
+                actions = fetch();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             model.updateActions(actions);
 
         }, 1, TimeUnit.MINUTES);
