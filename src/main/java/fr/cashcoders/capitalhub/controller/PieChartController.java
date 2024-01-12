@@ -24,7 +24,6 @@ public class PieChartController {
     public void initialize() {
         refresh();
 
-        // AJOUTE UN EFFET DE HOVER SUR LE PIE CHART (SCALE TRANSITION)
         for (PieChart.Data data : actionsPieChart.getData()) {
             data.getNode().setOnMouseEntered(event -> {
                 data.getNode().setScaleX(1.1);
@@ -43,7 +42,10 @@ public class PieChartController {
 
         this.actionsPieChart.getData().clear();
         for (ActionProduit actionProduit : portefeuille.getActionsProduct()) {
-            this.actionsPieChart.getData().add(new PieChart.Data(actionProduit.getActionName(), actionProduit.getActionValue() / totalValue * 100));
+            double valueTronque = (actionProduit.getActionValue() * 100);
+            double pourcentage = (valueTronque / totalValue);
+
+            this.actionsPieChart.getData().add(new PieChart.Data(actionProduit.getActionName() + " / " + String.format("%.2f", pourcentage) + "%", actionProduit.getActionValue() / totalValue * 100));
         }
     }
 

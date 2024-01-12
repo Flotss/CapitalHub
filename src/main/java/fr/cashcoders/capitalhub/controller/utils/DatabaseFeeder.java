@@ -18,12 +18,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class DatabaseFeeder {
 
     private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
+    private static final List<Action> actions = new ArrayList<>();
 
     public static void load(List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading database...");
@@ -72,11 +74,23 @@ public class DatabaseFeeder {
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
 
-                Action action = new Action(actionId2, actionName, actionValue);
+                // Recherche de l'action dans la liste sinon on la crée
+                Action action = recoverAction(actionId2, actionName, actionValue);
                 portefeuille.addActionProduit(new ActionProduit(action, portefeuille, quantity));
             }
         }
         logger.info("Done loading actionProduits for portefeuille " + portefeuille.getName());
+    }
+
+    private static Action recoverAction(int id, String name, double value) {
+        for (Action action : actions) {
+            if (action.getId() == id) {
+                return action;
+            }
+        }
+        Action action = new Action(id, name, value);
+        actions.add(action);
+        return action;
     }
 
     private static void loadTransactions(Portefeuille portefeuille, Connection connection) throws SQLException {
@@ -100,7 +114,7 @@ public class DatabaseFeeder {
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
 
-                Action action = new Action(actionId2, actionName, actionValue);
+                Action action = recoverAction(actionId2, actionName, actionValue);
                 portefeuille.addTransaction(new Transaction(transactionId, portefeuille, action, price, date, codeCurrency, TransactionType.fromString(type)));
             }
         }
@@ -127,7 +141,7 @@ public class DatabaseFeeder {
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
 
-                Action action = new Action(actionId2, actionName, actionValue);
+                Action action = recoverAction(actionId2, actionName, actionValue);
                 portefeuille.addHistory(new History(historyId, portefeuille, action, price, date));
             }
         }

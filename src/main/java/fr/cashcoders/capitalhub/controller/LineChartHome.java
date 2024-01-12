@@ -1,5 +1,6 @@
 package fr.cashcoders.capitalhub.controller;
 
+import fr.cashcoders.capitalhub.model.Period;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -11,7 +12,7 @@ public class LineChartHome {
     private final Model model;
     @FXML
     private LineChart<String, Integer> lineChart;
-    private String filter = "year";
+    private Period filter = Period.MONTH;
 
     public LineChartHome(Model model) {
         this.model = model;
@@ -36,7 +37,7 @@ public class LineChartHome {
     }
 
 
-    private void setFilter(String filter) {
+    private void setFilter(Period filter) {
         if (this.filter.equals(filter)) return;
 
         this.filter = filter;
@@ -44,15 +45,15 @@ public class LineChartHome {
     }
 
     public void filterDay() {
-        setFilter("day");
+        setFilter(Period.DAY);
     }
 
     public void filterMonth() {
-        setFilter("month");
+        setFilter(Period.MONTH);
     }
 
     public void filterYear() {
-        setFilter("year");
+        setFilter(Period.YEAR);
     }
 
 }

@@ -88,28 +88,47 @@ INSERT INTO History (idPortefeuille, idAction, price, date)
 VALUES (1, 2, 1100, '2024-01-03 10:00:00');
 
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (1, 2, 1000, '2024-01-04 10:00:00');
+VALUES (1, 2, 1000, '2024-01-04 9:00:00');
 
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (1, 2, 1000, '2024-01-12 10:54:00');
+VALUES (1, 2, 1000, '2024-01-12 10:30:00');
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (1, 2, 1200, '2024-01-12 11:54:00');
+VALUES (1, 2, 1200, '2024-01-12 11:50:00');
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (1, 3, 5000, '2024-01-12 10:54:00');
+VALUES (1, 3, 5000, '2024-01-12 13:20:00');
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (1, 3, 4000, '2024-01-12 14:54:00');
+VALUES (1, 3, 4000, '2024-01-12 14:10:00');
+
+select *
+from History
+where idPortefeuille = 1
+  and idAction = 2
+order by date desc;
+delete
+from History
+where idPortefeuille = 1 and idAction = 2
+   or idAction = 3;
 
 
 
 -- Variation du prix d'Apple pour le Portefeuille 2
+-- delete from History where idPortefeuille = 2 and idAction = 4;
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (2, 4, 135.50, '2024-01-02 10:00:00');
+VALUES (2, 4, 135.50, '2024-01-02 10:01:00');
 
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (2, 4, 130.00, '2024-01-03 10:00:00');
+VALUES (2, 4, 130.00, '2024-01-03 10:30:00');
 
 INSERT INTO History (idPortefeuille, idAction, price, date)
-VALUES (2, 4, 140.00, '2024-01-04 10:00:00');
+VALUES (2, 4, 140.00, '2024-01-04 10:40:00');
+
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (2, 4, 200, '2024-01-04 11:40:00');
+
+INSERT INTO History (idPortefeuille, idAction, price, date)
+VALUES (2, 4, 250, '2024-01-04 19:40:00');
+
+
 
 -- Variation du prix de Tesla pour le Portefeuille 2
 INSERT INTO History (idPortefeuille, idAction, price, date)

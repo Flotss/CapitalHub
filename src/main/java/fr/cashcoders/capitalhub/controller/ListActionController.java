@@ -32,7 +32,7 @@ public class ListActionController {
         nameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getActionName()));
         nameColumn.setMinWidth(90);
 
-        TableColumn<ActionProduit, Double> quantiryColumn = new TableColumn<>("Description");
+        TableColumn<ActionProduit, Double> quantiryColumn = new TableColumn<>("Nombre d'actifs");
         quantiryColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getQuantity()));
         quantiryColumn.setMinWidth(90);
 
