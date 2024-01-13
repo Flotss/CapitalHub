@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            fx:controller="fr.cashcoders.capitalhub.controller.ConnectionController">
+    <center>
+        <HBox alignment="CENTER" prefHeight="248.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" prefHeight="232.0" prefWidth="489.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="47.0" prefWidth="489.0" spacing="20.0">
+                            <children>
+                                <Label text="Nom d'utilisateur"/>
+                                <TextField fx:id="username"/>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="187.0" prefHeight="47.0" prefWidth="489.0"
+                              spacing="40.0">
+                            <children>
+                                <Label text="Mot de passe"/>
+                                <PasswordField fx:id="password"/>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" prefHeight="47.0" prefWidth="489.0"
+                              spacing="40.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#inscription" text="Créer un compte"/>
+                                <Button mnemonicParsing="false" onAction="#connection" text="Connection"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+    <top>
+        <Label text="PAGE DE CONNECTION" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="JetBrains Mono ExtraBold ExtBd Nerd Font Complete" size="35.0"/>
+            </font>
+            <BorderPane.margin>
+                <Insets top="50.0"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
+    <bottom>
+        <Label fx:id="error" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="70.0"/>
+            </BorderPane.margin>
+        </Label>
+    </bottom>
+</BorderPane>
