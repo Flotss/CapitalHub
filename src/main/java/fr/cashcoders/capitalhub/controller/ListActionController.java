@@ -31,17 +31,21 @@ public class ListActionController implements ControllerInterface {
         // Create columns for the TableView
         TableColumn<ActionProduit, String> nameColumn = new TableColumn<>("Nom");
         nameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getActionName()));
-        nameColumn.setMinWidth(90);
+        nameColumn.setMinWidth(67);
 
         TableColumn<ActionProduit, Double> quantiryColumn = new TableColumn<>("Nombre d'actifs");
         quantiryColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getQuantity()));
-        quantiryColumn.setMinWidth(90);
+        quantiryColumn.setMinWidth(67);
 
         TableColumn<ActionProduit, Double> valueColumn = new TableColumn<>("Valeur");
         valueColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getActionValue()));
-        valueColumn.setMinWidth(90);
+        valueColumn.setMinWidth(67);
 
-        tableViewActions.getColumns().setAll(nameColumn, quantiryColumn, valueColumn);
+        TableColumn<ActionProduit, Double> valueUnitColumn = new TableColumn<>("Valeur unitaire");
+        valueUnitColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getAction().getPrice()));
+        valueUnitColumn.setMinWidth(67);
+
+        tableViewActions.getColumns().setAll(nameColumn, quantiryColumn, valueColumn, valueUnitColumn);
         refresh();
     }
 
