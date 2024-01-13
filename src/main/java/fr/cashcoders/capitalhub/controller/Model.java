@@ -2,20 +2,18 @@ package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.controller.aggregator.DataAggregator;
-import fr.cashcoders.capitalhub.controller.filter.FilterFactory;
-import fr.cashcoders.capitalhub.controller.filter.FilterStrategy;
 import fr.cashcoders.capitalhub.controller.utils.APIActionScheduler;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
 import fr.cashcoders.capitalhub.model.*;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
+import fr.cashcoders.capitalhub.view.Observer;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
 import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +32,8 @@ public class Model {
     private Currency currency;
     private APIActionScheduler apiActionScheduler;
 
+    private Observer observer = null;
+
     public Model(User user) throws SQLException {
         this.user = user;
         this.portefeuilles = new ArrayList<>();
@@ -43,26 +43,25 @@ public class Model {
         this.currency = currencies.get(0);
         apiActionScheduler = new APIActionScheduler(this);
 //        apiActionScheduler.run();
+
     }
 
-//    public void createPortefeuille(String name, String description) {
-//        Portefeuille portefeuille = new Portefeuille(name, description);
-//        portefeuilles.add(portefeuille);
-//    }
-//
-//    public void addAction(Portefeuille portefeuille, Action action) {
-//        portefeuille.addAction(action);
-//        this.addEvent(new Event("Transaction added to " + portefeuille.getName()), portefeuille);
-//    }
-//
-//    public void clonePortefeuille(Portefeuille portefeuille) {
-//        Portefeuille clone = new Portefeuille(portefeuille.getName(), portefeuille.getDescription());
-//        for (Action action : portefeuille.getActions()) {
-//            clone.addAction(action);
-//        }
-//        portefeuilles.add(clone);
-//        this.addEvent(new Event("Portefeuille " + portefeuille.getName() + " cloned"), portefeuille);
-//    }
+    public void createPortefeuille(String name, String description) {
+        Portefeuille portefeuille = new Portefeuille(user, name, description);
+        portefeuilles.add(portefeuille);
+        notifyObserver();
+    }
+
+    public void addAction(Portefeuille portefeuille, ActionProduit action) {
+        portefeuille.addActionProduit(action);
+        notifyObserver();
+    }
+
+    public void clonePortefeuille(Portefeuille portefeuille) {
+        Portefeuille clone = new Portefeuille(portefeuille);
+        portefeuilles.add(clone);
+        notifyObserver();
+    }
 
     public List<Portefeuille> getPortefeuilles() {
         return portefeuilles;
@@ -74,6 +73,7 @@ public class Model {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+        notifyObserver();
     }
 
     public List<History> getHistory(Portefeuille portefeuille) {
@@ -88,20 +88,20 @@ public class Model {
         return portefeuilles.get(index).getActionsProduct();
     }
 
+    public void addTransaction(Transaction transaction, Portefeuille portefeuille) {
+        portefeuille.addTransaction(transaction);
+        notifyObserver();
+    }
+
 
     public XYChart.Series<String, Integer> getSeries(Portefeuille portefeuille, Period filter) {
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         series.setName(portefeuille.getName());
 
-        FilterStrategy filterStrategy = FilterFactory.getFilter(filter);
         DataAggregator dataAggregator = new DataAggregator();
-        series = dataAggregator.getSeries(portefeuille, filterStrategy);
+        series = dataAggregator.getSeries(portefeuille, filter);
 
         return series;
-    }
-
-    private LocalDateTime resetTime(LocalDateTime dateTime) {
-        return dateTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
     }
 
 
@@ -128,6 +128,18 @@ public class Model {
                     actionsAlreadyUpdated.add(action);
                 }
             }
+        }
+        notifyObserver();
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
+    }
+
+
+    public void notifyObserver() {
+        if (observer != null) {
+            observer.update();
         }
     }
 }
