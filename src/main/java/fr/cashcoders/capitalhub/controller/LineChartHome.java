@@ -12,6 +12,7 @@ public class LineChartHome {
     private final Model model;
     @FXML
     private LineChart<String, Integer> lineChart;
+
     private Period filter = Period.MONTH;
 
     public LineChartHome(Model model) {
@@ -33,7 +34,6 @@ public class LineChartHome {
         for (Portefeuille portefeuille : portefeuilles) {
             lineChart.getData().add(model.getSeries(portefeuille, filter));
         }
-
     }
 
 

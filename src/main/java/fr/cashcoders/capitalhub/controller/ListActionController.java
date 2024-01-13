@@ -51,7 +51,6 @@ public class ListActionController {
         List<ActionProduit> actionProduits = portefeuille.getActionsProduct();
         tableViewActions.getItems().addAll(actionProduits);
 
-        // Add click event listener to the TableView
         tableViewActions.setRowFactory(tv -> {
             TableRow<ActionProduit> row = new TableRow<>();
             row.setOnMouseEntered(event -> {

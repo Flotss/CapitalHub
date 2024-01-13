@@ -60,6 +60,24 @@ public class Portefeuille implements Observable, DBInterface {
         return history;
     }
 
+    public List<History> getHistory(Period period) {
+        // Get the history of all the actions
+        List<History> history = new ArrayList<>(this.history);
+        switch (period) {
+            case DAY:
+                history.removeIf(h -> h.getDate().toLocalDate().isBefore(LocalDate.now().minusDays(1)));
+                break;
+            case MONTH:
+                history.removeIf(h -> h.getDate().toLocalDate().isBefore(LocalDate.now().minusMonths(1)));
+                break;
+            case YEAR:
+                history.removeIf(h -> h.getDate().toLocalDate().isBefore(LocalDate.now().minusYears(1)));
+                break;
+        }
+
+        return history;
+    }
+
     public void addActionProduit(ActionProduit action) {
         this.actionsProducts.add(action);
     }
@@ -126,7 +144,7 @@ public class Portefeuille implements Observable, DBInterface {
             var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                this.id = resultSet.getInt("id"); // Retrieve the ID from the result set
+                this.id = resultSet.getInt("id");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,9 +1,9 @@
 package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
-import fr.cashcoders.capitalhub.controller.Aggregator.DataAggregator;
-import fr.cashcoders.capitalhub.controller.Filter.FilterFactory;
-import fr.cashcoders.capitalhub.controller.Filter.FilterStrategy;
+import fr.cashcoders.capitalhub.controller.aggregator.DataAggregator;
+import fr.cashcoders.capitalhub.controller.filter.FilterFactory;
+import fr.cashcoders.capitalhub.controller.filter.FilterStrategy;
 import fr.cashcoders.capitalhub.controller.utils.APIActionScheduler;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Model {
+
+    public final static List<Action> actions = new ArrayList<>();
 
 
     private final List<Portefeuille> portefeuilles;

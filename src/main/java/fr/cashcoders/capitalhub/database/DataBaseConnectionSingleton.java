@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBaseConnectionSingleton {
-    private static final Dotenv dotenv = Dotenv.configure().load();
+    public static final Dotenv dotenv = Dotenv.configure().load();
     private static final String POSTGRES_URL = dotenv.get("POSTGRES_URL");
     private static final String POSTGRES_USER = dotenv.get("POSTGRES_USER");
     private static final String POSTGRES_PASSWORD = dotenv.get("POSTGRES_PASSWORD");

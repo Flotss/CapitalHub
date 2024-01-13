@@ -1,6 +1,6 @@
-package fr.cashcoders.capitalhub.controller.Aggregator;
+package fr.cashcoders.capitalhub.controller.aggregator;
 
-import fr.cashcoders.capitalhub.controller.Filter.FilterStrategy;
+import fr.cashcoders.capitalhub.controller.filter.FilterStrategy;
 import fr.cashcoders.capitalhub.model.History;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.scene.chart.XYChart;
@@ -16,8 +16,7 @@ public class DataAggregator {
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         series.setName(portefeuille.getName());
 
-        // Logique pour obtenir et agréger les données...
-        List<History> history = portefeuille.getHistory();
+        List<History> history = portefeuille.getHistory(filterStrategy.getPeriod());
         Map<LocalDateTime, Integer> data = new HashMap<>();
 
         AggregatorStrategy aggregatorStrategy = AggregatorFactory.getAggregator(filterStrategy.getPeriod());

@@ -17,7 +17,7 @@
             <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="204.0" style="-fx-font-weight: bold;"
                    text="Vos actions"/>
             <Separator opacity="0.0" prefWidth="200.0"/>
-            <Button mnemonicParsing="false" text="Actualiser"/>
+            <Button mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
         </children>
     </HBox>
     <PieChart fx:id="actionsPieChart" prefHeight="307.0" prefWidth="500.0"/>

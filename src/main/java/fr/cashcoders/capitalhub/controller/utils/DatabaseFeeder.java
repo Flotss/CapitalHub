@@ -1,16 +1,6 @@
 package fr.cashcoders.capitalhub.controller.utils;
 
-//     private final MainView mainView = CapitalHubApp.mainView;
-//    private final PortefeuilleDetailsView portefeuilleDetailsView = CapitalHubApp.portefeuilleDetailsView;
-//    private final HistoryView historyView = CapitalHubApp.historyView;
-//    private Connection connection = DataBaseConnectionSingleton.getInstance().getConnection();
-//
-//    public Model() {
-//        this.portefeuilles = new ArrayList<>();
-//        this.history = new HashMap<>();
-//
-//        DatabaseFeeder.load(portefeuilles, history, currencies, connection);
-
+import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.model.*;
 
 import java.sql.Connection;
@@ -32,8 +22,16 @@ public class DatabaseFeeder {
 
         loadPortefeuilles(portefeuilles, connection);
         loadCurrencies(currencies, connection);
-
+        saveActions();
+        
+        
         logger.info("Done loading portefeuilles and currencies");
+    }
+
+    private static void saveActions() {
+        logger.info("Saving actions...");
+        Model.actions.addAll(actions);
+        logger.info("Done saving actions");
     }
 
     private static void loadPortefeuilles(List<Portefeuille> portefeuilles, Connection connection) throws SQLException {

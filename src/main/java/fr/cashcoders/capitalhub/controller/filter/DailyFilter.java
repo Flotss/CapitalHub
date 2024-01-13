@@ -1,4 +1,4 @@
-package fr.cashcoders.capitalhub.controller.Filter;
+package fr.cashcoders.capitalhub.controller.filter;
 
 import fr.cashcoders.capitalhub.model.Period;
 import javafx.scene.chart.XYChart;

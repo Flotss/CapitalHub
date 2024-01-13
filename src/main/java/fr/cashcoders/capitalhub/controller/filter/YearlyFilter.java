@@ -1,4 +1,4 @@
-package fr.cashcoders.capitalhub.controller.Filter;
+package fr.cashcoders.capitalhub.controller.filter;
 
 import fr.cashcoders.capitalhub.model.Period;
 import javafx.scene.chart.XYChart;
@@ -12,9 +12,6 @@ public class YearlyFilter implements FilterStrategy {
         LocalDateTime endDate = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime startDate = endDate.minusMonths(11);
 
-        // PRINT ALL VALUE OF VALUE
-         value.forEach((k, v) -> System.out.println("Key : " + k + " / Value : " + v));
-
         int lastValue = 0;
         for (LocalDateTime date = startDate; !date.isAfter(endDate); date = date.plusMonths(1)) {
             String monthLabel = date.getMonth().toString();
@@ -24,7 +21,6 @@ public class YearlyFilter implements FilterStrategy {
             if (valueMonth != 0 && valueMonth != lastValue) {
                 lastValue = valueMonth;
             }
-            System.out.println("Month : " + monthLabel + " : " + valueMonth);
         }
 
     }

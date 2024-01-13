@@ -53,7 +53,7 @@ public class Transaction implements DBInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                this.id = resultSet.getInt("id"); // Retrieve the ID from the result set
+                this.id = resultSet.getInt("id");
             }
         }
     }

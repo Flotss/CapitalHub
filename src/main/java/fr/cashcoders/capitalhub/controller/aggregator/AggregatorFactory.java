@@ -1,4 +1,4 @@
-package fr.cashcoders.capitalhub.controller.Aggregator;
+package fr.cashcoders.capitalhub.controller.aggregator;
 
 import fr.cashcoders.capitalhub.model.Period;
 

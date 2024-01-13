@@ -22,7 +22,6 @@ public class ListPortefeuilleController {
         this.model = model;
     }
 
-    // INITIALIZATION
     @FXML
     public void initialize() {
         tableViewPortefeuille.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -54,13 +53,11 @@ public class ListPortefeuilleController {
         List<Portefeuille> portefeuilles = model.getPortefeuilles();
         tableViewPortefeuille.getItems().addAll(portefeuilles);
 
-        // Add click event listener to the TableView
         tableViewPortefeuille.setRowFactory(tv -> {
             TableRow<Portefeuille> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                     Portefeuille clickedRow = row.getItem();
-                    // Handle the click event here
                     PortefeuilleDetailsView portefeuilleDetailsView = new PortefeuilleDetailsView(model, clickedRow);
                     portefeuilleDetailsView.show();
                 }
