@@ -18,6 +18,11 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
+
+/**
+ * Main application class for CapitalHubApp.
+ * It extends JavaFX's Application class
+ */
 public class CapitalHubApp extends Application {
     public static Stage primaryStage;
 
@@ -25,6 +30,11 @@ public class CapitalHubApp extends Application {
     public static HistoryView historyView;
 
 
+    /**
+     * Changes the scene of the application to the given parent
+     *
+     * @param parent Parent to change the scene to
+     */
     public static void changeScene(Parent parent) {
         VBox root = new VBox();
 
@@ -54,6 +64,11 @@ public class CapitalHubApp extends Application {
         primaryStage.setHeight(1000);
     }
 
+    /**
+     * Initializes the UI with the given user
+     *
+     * @param user User to initialize the UI with
+     */
     public static void initializeUI(User user) {
         Model model = null;
         try {
@@ -66,11 +81,19 @@ public class CapitalHubApp extends Application {
         }
     }
 
+    /**
+     * Initializes the UI
+     */
     private void connectionUI() {
         ConnectionView connectionView = new ConnectionView();
         connectionView.show();
     }
 
+    /**
+     * Starts the application
+     *
+     * @param stage Stage to start the application with
+     */
     @Override
     public void start(Stage stage) {
         CapitalHubApp.primaryStage = stage;
@@ -79,6 +102,9 @@ public class CapitalHubApp extends Application {
 //        initializeUI(new User(1, "test"));
     }
 
+    /**
+     * Starts the application
+     */
     public void start() {
         launch();
     }

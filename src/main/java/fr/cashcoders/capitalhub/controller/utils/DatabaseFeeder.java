@@ -13,11 +13,26 @@ import java.util.logging.Logger;
 
 import static fr.cashcoders.capitalhub.model.DBInterface.connection;
 
+/**
+ * The DatabaseFeeder class provides methods for loading data into the database, including user portefeuilles,
+ * currencies, actions, transactions, and history records.
+ * It is responsible for populating the database with initial data.
+ */
 public class DatabaseFeeder {
 
     private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
     private static final List<Action> actions = new ArrayList<>();
 
+
+    /**
+     * Loads data into the database, including user portefeuilles, currencies, actions, transactions, and history records.
+     *
+     * @param user          The user for whom data is loaded.
+     * @param portefeuilles A list of Portefeuille objects to be loaded into the database.
+     * @param currencies    A list of Currency objects to be loaded into the database.
+     * @param connection    The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs during the data loading process.
+     */
     public static void load(User user, List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading database...");
 
@@ -29,6 +44,11 @@ public class DatabaseFeeder {
         logger.info("Done loading portefeuilles and currencies");
     }
 
+    /**
+     * Loads actions from the database and populates the 'actions' list.
+     *
+     * @throws SQLException If an SQL exception occurs while loading actions from the database.
+     */
     private static void loadActions() throws SQLException {
         logger.info("Loading actions...");
         PreparedStatement actionStatement = connection.prepareStatement("SELECT * FROM action");
@@ -49,6 +69,15 @@ public class DatabaseFeeder {
         logger.info("Done loading actions");
     }
 
+
+    /**
+     * Loads user portefeuilles from the database and populates the 'portefeuilles' list.
+     *
+     * @param user        The user for whom portefeuilles are loaded.
+     * @param portefeuilles A list of Portefeuille objects to be loaded and populated.
+     * @param connection  The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs while loading portefeuilles from the database.
+     */
     private static void loadPortefeuilles(User user, List<Portefeuille> portefeuilles, Connection connection) throws SQLException {
         logger.info("Loading portefeuilles...");
         PreparedStatement portefeuilleStatement = connection.prepareStatement("SELECT * FROM portefeuille WHERE iduser = ?");
@@ -71,6 +100,13 @@ public class DatabaseFeeder {
         }
     }
 
+    /**
+     * Loads ActionProduits for a given Portefeuille from the database and populates the Portefeuille object.
+     *
+     * @param portefeuille The Portefeuille object for which ActionProduits are loaded and populated.
+     * @param connection  The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs while loading ActionProduits from the database.
+     */
     private static void loadActionProduits(Portefeuille portefeuille, Connection connection) throws SQLException {
         logger.info("Loading actionProduits for portefeuille " + portefeuille.getName());
         PreparedStatement actionProduitStatement = connection.prepareStatement("SELECT * FROM actionproduit WHERE idportefeuille = ?");
@@ -96,6 +132,15 @@ public class DatabaseFeeder {
         logger.info("Done loading actionProduits for portefeuille " + portefeuille.getName());
     }
 
+
+    /**
+     * Recovers an Action object from the 'actions' list if it exists, or creates a new one if not found.
+     *
+     * @param id    The ID of the Action.
+     * @param name  The name of the Action.
+     * @param value The value of the Action.
+     * @return The recovered or newly created Action object.
+     */
     private static Action recoverAction(int id, String name, double value) {
         for (Action action : actions) {
             if (action.getId() == id) {
@@ -107,6 +152,13 @@ public class DatabaseFeeder {
         return action;
     }
 
+
+    /**
+     * Checks if an Action object is already in the 'actions' list.
+     *
+     * @param action The Action object to be checked.
+     * @return True if the Action is in the list, otherwise false.
+     */
     private static boolean isInActions(Action action) {
         for (Action actionItem : actions) {
             if (actionItem.equals(actionItem)) {
@@ -116,6 +168,13 @@ public class DatabaseFeeder {
         return false;
     }
 
+    /**
+     * Loads transactions for a given Portefeuille from the database and populates the Portefeuille object.
+     *
+     * @param portefeuille The Portefeuille object for which transactions are loaded and populated.
+     * @param connection   The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs while loading transactions from the database.
+     */
     private static void loadTransactions(Portefeuille portefeuille, Connection connection) throws SQLException {
         logger.info("Loading transactions for portefeuille " + portefeuille.getName());
         PreparedStatement transactionStatement = connection.prepareStatement("SELECT * FROM transaction WHERE idportefeuille = ?");
@@ -145,6 +204,13 @@ public class DatabaseFeeder {
 
     }
 
+    /**
+     * Loads history records for a given Portefeuille from the database and populates the Portefeuille object.
+     *
+     * @param portefeuille The Portefeuille object for which history.
+     * @param connection   The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs while loading history records from the database.
+     */
     private static void loadHistory(Portefeuille portefeuille, Connection connection) throws SQLException {
         logger.info("Loading history for portefeuille " + portefeuille.getName());
         PreparedStatement historyStatement = connection.prepareStatement("SELECT * FROM history WHERE idportefeuille = ?");
@@ -172,6 +238,13 @@ public class DatabaseFeeder {
     }
 
 
+    /**
+     * Loads currencies from the database and populates the 'currencies' list.
+     *
+     * @param currencies A list of Currency objects to be loaded.
+     * @param connection The database connection to be used for loading data.
+     * @throws SQLException If an SQL exception occurs while loading currencies from the database.
+     */
     private static void loadCurrencies(List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading currencies...");
         PreparedStatement currencyStatement = connection.prepareStatement("SELECT * FROM currency");
