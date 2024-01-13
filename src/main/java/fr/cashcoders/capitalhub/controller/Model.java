@@ -1,15 +1,11 @@
 package fr.cashcoders.capitalhub.controller;
 
-import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.controller.aggregator.DataAggregator;
 import fr.cashcoders.capitalhub.controller.utils.APIActionScheduler;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
 import fr.cashcoders.capitalhub.model.*;
-import fr.cashcoders.capitalhub.view.HistoryView;
-import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.Observer;
-import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
 import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
@@ -22,15 +18,12 @@ public class Model {
 
     public final static List<Action> actions = new ArrayList<>();
 
-    private User user;
+    private final User user;
     private final List<Portefeuille> portefeuilles;
-    private final MainView mainView = CapitalHubApp.mainView;
-    private final PortefeuilleDetailsView portefeuilleDetailsView = CapitalHubApp.portefeuilleDetailsView;
-    private final HistoryView historyView = CapitalHubApp.historyView;
     private final List<Currency> currencies;
     private final Connection connection = DataBaseConnectionSingleton.getInstance().getConnection();
     private Currency currency;
-    private APIActionScheduler apiActionScheduler;
+    private final APIActionScheduler apiActionScheduler;
 
     private Observer observer = null;
 
@@ -87,11 +80,11 @@ public class Model {
     }
 
     public List<ActionProduit> getActionsProduits(Portefeuille portefeuille) {
-        return portefeuille.getActionsProduct();
+        return portefeuille.getActionsProducts();
     }
 
     public List<ActionProduit> getActionsProduit(int index) {
-        return portefeuilles.get(index).getActionsProduct();
+        return portefeuilles.get(index).getActionsProducts();
     }
 
     public void addTransaction(Transaction transaction, Portefeuille portefeuille) {
@@ -123,7 +116,7 @@ public class Model {
     public void updateActions(Map<String, Double> actions) {
         List<Action> actionsAlreadyUpdated = new ArrayList<>();
         for (Portefeuille portefeuille : portefeuilles) {
-            for (ActionProduit actionProduit : portefeuille.getActionsProduct()) {
+            for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
                 Action action = actionProduit.getAction();
                 if (actions.containsKey(action.getName()) && !actionsAlreadyUpdated.contains(action)) {
                     try {

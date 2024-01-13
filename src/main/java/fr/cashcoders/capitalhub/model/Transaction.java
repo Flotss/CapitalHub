@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 public class Transaction implements DBInterface {
     private int id;
@@ -28,7 +29,7 @@ public class Transaction implements DBInterface {
             try {
                 save();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
             }
         }
     }

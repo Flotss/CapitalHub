@@ -12,13 +12,10 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <HBox prefHeight="25.0" prefWidth="463.0">
-        <children>
-
-            <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="204.0" style="-fx-font-weight: bold;"
-                   text="Vos actions"/>
-            <Separator opacity="0.0" prefWidth="200.0"/>
-            <Button mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
-        </children>
+        <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="204.0" style="-fx-font-weight: bold;"
+               text="Vos actions"/>
+        <Separator opacity="0.0" prefWidth="200.0"/>
+        <Button mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
     </HBox>
     <PieChart fx:id="actionsPieChart" prefHeight="307.0" prefWidth="500.0"/>
 </VBox>

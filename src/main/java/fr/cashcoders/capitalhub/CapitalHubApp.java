@@ -6,7 +6,6 @@ import fr.cashcoders.capitalhub.model.User;
 import fr.cashcoders.capitalhub.view.ConnectionView;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
-import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +23,6 @@ public class CapitalHubApp extends Application {
 
     public static MainView mainView;
     public static HistoryView historyView;
-    public static PortefeuilleDetailsView portefeuilleDetailsView;
 
 
     public static void changeScene(Parent parent) {
@@ -60,12 +58,12 @@ public class CapitalHubApp extends Application {
         Model model = null;
         try {
             model = new Model(user);
+            mainView = new MainView(model);
+            historyView = new HistoryView(model);
+            mainView.show();
         } catch (SQLException e) {
             System.err.println("Error with database connection" + e.getMessage());
         }
-        mainView = new MainView(model);
-        historyView = new HistoryView(model);
-        mainView.show();
     }
 
     private void connectionUI() {

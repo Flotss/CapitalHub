@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 public class APIActionScheduler {
     private final Model model;
-    private ScheduledThreadPoolExecutor executor;
-    private List<APIFetcherInterface> fetchers;
+    private final ScheduledThreadPoolExecutor executor;
+    private final List<APIFetcherInterface> fetchers;
 
 
     public APIActionScheduler(Model model) {

@@ -1,8 +1,7 @@
 package fr.cashcoders.capitalhub.model;
 
-import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
-
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class Action implements DBInterface {
     private String name;
@@ -19,17 +18,13 @@ public class Action implements DBInterface {
             try {
                 save();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
             }
         }
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getId() {
@@ -67,7 +62,6 @@ public class Action implements DBInterface {
 
     @Override
     public void update() throws SQLException {
-        DataBaseConnectionSingleton db = DataBaseConnectionSingleton.getInstance();
         String query = "UPDATE action SET name = ?, value = ? WHERE id = ?;";
         try (var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, this.name);
@@ -79,7 +73,6 @@ public class Action implements DBInterface {
 
     @Override
     public void delete() throws SQLException {
-        DataBaseConnectionSingleton db = DataBaseConnectionSingleton.getInstance();
         String query = "DELETE FROM action WHERE id = ?;";
         try (var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.id);

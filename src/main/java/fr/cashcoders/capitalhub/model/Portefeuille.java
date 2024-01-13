@@ -1,7 +1,5 @@
 package fr.cashcoders.capitalhub.model;
 
-import fr.cashcoders.capitalhub.view.Observer;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -18,7 +16,6 @@ public class Portefeuille implements DBInterface {
     private final List<ActionProduit> actionsProducts;
     private final List<Transaction> transactions;
     private final List<History> history;
-    private final List<Observer> observers = new ArrayList<>();
 
     public Portefeuille(int id, int idUser, String name, String description) {
         this.id = id;
@@ -46,9 +43,9 @@ public class Portefeuille implements DBInterface {
 
     // CLONE CONSTRUCTOR
     public Portefeuille(Portefeuille portefeuille) {
-        this.idUser = portefeuille.getIdUser();
-        this.name = portefeuille.getName();
-        this.description = portefeuille.getDescription();
+        this.idUser = portefeuille.idUser;
+        this.name = portefeuille.name;
+        this.description = portefeuille.description;
         this.actionsProducts = new ArrayList<>();
         this.transactions = new ArrayList<>();
         this.history = new ArrayList<>();
@@ -73,15 +70,15 @@ public class Portefeuille implements DBInterface {
 
     public void setName(String name) {
         this.name = name;
-        save();
+        update();
     }
 
     public void setDescription(String description) {
         this.description = description;
-        save();
+        update();
     }
 
-    public List<ActionProduit> getActionsProduct() {
+    public List<ActionProduit> getActionsProducts() {
         return actionsProducts;
     }
 
@@ -226,7 +223,6 @@ public class Portefeuille implements DBInterface {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", actions=" + actionsProducts +
-                ", observers=" + observers +
                 '}';
     }
 }

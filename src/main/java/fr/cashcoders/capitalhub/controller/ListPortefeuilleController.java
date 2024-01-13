@@ -132,7 +132,7 @@ public class ListPortefeuilleController implements ControllerInterface {
             row.setOnMouseClicked(event -> {
                 selectedPortefeuille = row.getItem();
 
-                // Double click on row -> open PortefeuilleDetailsView
+                // Double-click on row -> open PortefeuilleDetailsView
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     PortefeuilleDetailsView portefeuilleDetailsView = new PortefeuilleDetailsView(model, selectedPortefeuille);
                     portefeuilleDetailsView.show();

@@ -25,8 +25,6 @@ public class PasswordHashing {
             // Retournez le hachage sous forme de chaîne hexadécimale
             return stringBuilder.toString();
         } catch (NoSuchAlgorithmException e) {
-            // Gérez l'exception NoSuchAlgorithmException
-            e.printStackTrace();
             return null;
         }
     }

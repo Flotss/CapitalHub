@@ -18,8 +18,8 @@ public class ChartData {
     }
 
     public ChartData() {
-        this.labels = new ArrayList<String>();
-        this.data = new ArrayList<BigDecimal>();
+        this.labels = new ArrayList<>();
+        this.data = new ArrayList<>();
     }
 
     public void addLabel(String label) {

@@ -48,7 +48,7 @@ public class ListActionController implements ControllerInterface {
     public void refresh() {
         tableViewActions.getItems().clear();
 
-        List<ActionProduit> actionProduits = portefeuille.getActionsProduct();
+        List<ActionProduit> actionProduits = portefeuille.getActionsProducts();
         tableViewActions.getItems().addAll(actionProduits);
 
         tableViewActions.setRowFactory(tv -> {

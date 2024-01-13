@@ -1,6 +1,7 @@
 package fr.cashcoders.capitalhub.model;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class ActionProduit implements DBInterface {
     private final Action action;
@@ -16,7 +17,7 @@ public class ActionProduit implements DBInterface {
             try {
                 this.action.save();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
             }
         }
     }

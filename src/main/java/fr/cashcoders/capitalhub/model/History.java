@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 public class History implements DBInterface {
     private int id;
@@ -24,7 +25,7 @@ public class History implements DBInterface {
             try {
                 save();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
             }
         }
     }
