@@ -63,6 +63,12 @@ public class Model {
         notifyObserver();
     }
 
+    public void deletePortefeuille(Portefeuille portefeuille) {
+        portefeuille.delete();
+        portefeuilles.remove(portefeuille);
+        notifyObserver();
+    }
+
     public List<Portefeuille> getPortefeuilles() {
         return portefeuilles;
     }

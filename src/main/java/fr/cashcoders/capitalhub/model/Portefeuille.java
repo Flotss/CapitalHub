@@ -2,6 +2,8 @@ package fr.cashcoders.capitalhub.model;
 
 import fr.cashcoders.capitalhub.view.Observer;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +13,8 @@ import java.util.Map;
 public class Portefeuille implements DBInterface {
     private int id;
     private final int idUser;
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
     private final List<ActionProduit> actionsProducts;
     private final List<Transaction> transactions;
     private final List<History> history;
@@ -44,7 +46,7 @@ public class Portefeuille implements DBInterface {
 
     // CLONE CONSTRUCTOR
     public Portefeuille(Portefeuille portefeuille) {
-        this.idUser = 0;
+        this.idUser = portefeuille.getIdUser();
         this.name = portefeuille.getName();
         this.description = portefeuille.getDescription();
         this.actionsProducts = new ArrayList<>();
@@ -67,6 +69,16 @@ public class Portefeuille implements DBInterface {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        save();
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+        save();
     }
 
     public List<ActionProduit> getActionsProduct() {
@@ -166,6 +178,22 @@ public class Portefeuille implements DBInterface {
             }
         });
 
+        actionsProducts.forEach(actionProduit -> {
+            try {
+                actionProduit.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        history.forEach(history -> {
+            try {
+                history.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
 
         String query = "DELETE FROM portefeuille WHERE id = ?;";
         try (var preparedStement = connection.prepareStatement(query)) {
@@ -178,7 +206,16 @@ public class Portefeuille implements DBInterface {
 
     @Override
     public void update() {
-
+        String query = "UPDATE portefeuille SET name = ?, description = ? WHERE id = ?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setString(2, this.description);
+            preparedStatement.setInt(3, this.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

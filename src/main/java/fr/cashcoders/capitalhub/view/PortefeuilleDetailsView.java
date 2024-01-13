@@ -36,6 +36,8 @@ public class PortefeuilleDetailsView implements Observer {
         ControllerInterface controllerListActions = new ListActionController(model, portefeuille);
         loader2.setController(controllerListActions);
 
+        controllers = List.of(controllerPieChart, controllerListActions);
+
 
         VBox root = new VBox();
         try {
