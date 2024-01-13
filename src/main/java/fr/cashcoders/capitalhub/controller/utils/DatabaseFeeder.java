@@ -1,6 +1,5 @@
 package fr.cashcoders.capitalhub.controller.utils;
 
-import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.model.*;
 
 import java.sql.Connection;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static fr.cashcoders.capitalhub.model.DBInterface.connection;
+
 public class DatabaseFeeder {
 
     private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
@@ -22,16 +23,30 @@ public class DatabaseFeeder {
 
         loadPortefeuilles(user, portefeuilles, connection);
         loadCurrencies(currencies, connection);
-        saveActions();
+        loadActions();
         
         
         logger.info("Done loading portefeuilles and currencies");
     }
 
-    private static void saveActions() {
-        logger.info("Saving actions...");
-        Model.actions.addAll(actions);
-        logger.info("Done saving actions");
+    private static void loadActions() throws SQLException {
+        logger.info("Loading actions...");
+        PreparedStatement actionStatement = connection.prepareStatement("SELECT * FROM action");
+        ResultSet actionResultSet = actionStatement.executeQuery();
+
+        while (actionResultSet.next()) {
+            int actionId = actionResultSet.getInt("id");
+            String actionName = actionResultSet.getString("name");
+            double actionValue = actionResultSet.getDouble("value");
+
+            Action action = new Action(actionId, actionName, actionValue);
+
+            if (!isInActions(action)) {
+                actions.add(action);
+            }
+        }
+
+        logger.info("Done loading actions");
     }
 
     private static void loadPortefeuilles(User user, List<Portefeuille> portefeuilles, Connection connection) throws SQLException {
@@ -90,6 +105,15 @@ public class DatabaseFeeder {
         Action action = new Action(id, name, value);
         actions.add(action);
         return action;
+    }
+
+    private static boolean isInActions(Action action) {
+        for (Action actionItem : actions) {
+            if (actionItem.equals(actionItem)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void loadTransactions(Portefeuille portefeuille, Connection connection) throws SQLException {

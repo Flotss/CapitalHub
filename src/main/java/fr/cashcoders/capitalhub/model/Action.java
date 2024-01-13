@@ -1,6 +1,7 @@
 package fr.cashcoders.capitalhub.model;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Action implements DBInterface {
@@ -78,5 +79,17 @@ public class Action implements DBInterface {
             preparedStatement.setInt(1, this.id);
             preparedStatement.executeUpdate();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Action action)) return false;
+        return id == action.id && Double.compare(price, action.price) == 0 && Objects.equals(name, action.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, price);
     }
 }

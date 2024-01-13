@@ -27,16 +27,12 @@ public class User implements DBInterface {
     public static User getUserFromDB(String username, String password) throws SQLException {
         String hashPassword = PasswordHashing.hashPassword(password);
 
-
         PreparedStatement a = connection.prepareStatement("SELECT * FROM UserTable WHERE username = ? AND password = ?");
         a.setString(1, username);
         a.setString(2, hashPassword);
         a.executeQuery();
         ResultSet resultSet = a.getResultSet();
         if (resultSet.next()) {
-            System.out.println("User found");
-            System.out.println(resultSet.getInt("id"));
-            System.out.println(resultSet.getString("username"));
             return new User(resultSet.getInt("id"), resultSet.getString("username"));
         }
         return null;

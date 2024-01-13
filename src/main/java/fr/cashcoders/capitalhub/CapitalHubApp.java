@@ -74,9 +74,9 @@ public class CapitalHubApp extends Application {
     @Override
     public void start(Stage stage) {
         CapitalHubApp.primaryStage = stage;
-//        connectionUI();
+        connectionUI();
 
-        initializeUI(new User(1, "test"));
+//        initializeUI(new User(1, "test"));
     }
 
     public void start() {

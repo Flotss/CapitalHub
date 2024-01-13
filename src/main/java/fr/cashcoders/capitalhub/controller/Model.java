@@ -137,7 +137,9 @@ public class Model {
 
 
     public void notifyObserver() {
+        System.out.println("notifyObserver1");
         if (observer != null) {
+            System.out.println("notifyObserver2");
             observer.update();
         }
     }
