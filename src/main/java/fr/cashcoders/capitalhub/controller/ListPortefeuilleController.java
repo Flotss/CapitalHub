@@ -6,6 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -96,9 +97,22 @@ public class ListPortefeuilleController implements ControllerInterface {
             Button buttonModifier = new Button("Mise à jour");
 
             // LAYOUT
+            HBox hboxName = new HBox(labelName, textFieldName);
+            hboxName.setSpacing(10);
+            hboxName.setAlignment(Pos.CENTER);
+            hboxName.setPadding(new Insets(0, 0, 0, 33));
+
+            HBox hboxDescription = new HBox(labelDescription, textFieldDescription);
+            hboxDescription.setSpacing(10);
+            hboxDescription.setAlignment(Pos.CENTER);
+
+
+
             VBox layout = new VBox();
-            layout.getChildren().addAll(new HBox(labelName, textFieldName), new HBox(labelDescription, textFieldDescription), buttonModifier, info);
+            layout.getChildren().addAll(hboxName, hboxDescription, buttonModifier, info);
             layout.setAlignment(Pos.CENTER);
+            layout.setSpacing(10);
+            layout.setPadding(new Insets(10));
 
             // ACTION
             buttonModifier.setOnAction(event1 -> {
@@ -121,7 +135,7 @@ public class ListPortefeuilleController implements ControllerInterface {
                 delay.play();
             });
 
-            stage.setScene(new Scene(layout));
+            stage.setScene(new Scene(layout, 400, 200));
             stage.show();
         });
         contextMenu.getItems().addAll(ouvrirItemMenu, clonerItemMenu, deleteItemMenu, ModifierItemMenu);
@@ -175,9 +189,25 @@ public class ListPortefeuilleController implements ControllerInterface {
         Button buttonCreate = new Button("Créer");
 
         // LAYOUT
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(labelName, textFieldName);
+        hBox.setSpacing(10);
+        hBox.setAlignment(Pos.CENTER);
+        // LEFT
+        hBox.setPadding(new Insets(0, 0, 0, 33));
+
+        HBox hBox2 = new HBox();
+        hBox2.getChildren().addAll(labelDescription, textFieldDescription);
+        hBox2.setSpacing(10);
+        hBox2.setAlignment(Pos.CENTER);
+
+
+
         VBox layout = new VBox();
-        layout.getChildren().addAll(new HBox(labelName, textFieldName), new HBox(labelDescription, textFieldDescription), buttonCreate, info);
+        layout.getChildren().addAll(hBox, hBox2, buttonCreate, info);
         layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(10);
+        layout.setPadding(new Insets(10));
 
         // ACTION
         buttonCreate.setOnAction(event -> {
@@ -198,7 +228,9 @@ public class ListPortefeuilleController implements ControllerInterface {
             }
         });
 
-        stage.setScene(new Scene(layout));
+        stage.setScene(new Scene(layout, 400, 200));
         stage.show();
     }
+
+
 }

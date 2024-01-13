@@ -4,19 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea">
     <top>
-        <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <Label style="-fx-font-weight: bold;" text="Liste Actions">
                 <cursor>
                     <Cursor fx:constant="DEFAULT"/>
                 </cursor>
             </Label>
-            <Separator opacity="0.0" prefWidth="200.0"/>
-            <Separator opacity="0.0" prefWidth="200.0"/>
-            <Button mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
+            <Separator opacity="0.0" prefHeight="9.0" prefWidth="273.0"/>
+            <Button mnemonicParsing="false" onAction="#actionBuySell" text="Acheter/Vendre"/>
+            <Button layoutX="512.0" layoutY="10.0" mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
             <BorderPane.margin>
                 <Insets top="16.0"/>
             </BorderPane.margin>
@@ -26,8 +25,8 @@
         <VBox prefHeight="323.0" prefWidth="580.0" BorderPane.alignment="CENTER">
             <ScrollPane fx:id="scrollPanePortefeuille" prefHeight="319.0" prefWidth="573.0">
                 <content>
-                    <TableView fx:id="tableViewActions" maxHeight="-Infinity" maxWidth="-Infinity"
-                               minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="577.0">
+                    <TableView fx:id="tableViewActions" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                               minWidth="-Infinity" prefHeight="317.0" prefWidth="577.0">
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                         </columnResizePolicy>

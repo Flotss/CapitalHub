@@ -5,9 +5,11 @@ import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -15,7 +17,6 @@ public class ListActionController implements ControllerInterface {
 
     private final Model model;
     private final Portefeuille portefeuille;
-
 
     @FXML
     private TableView<ActionProduit> tableViewActions;
@@ -65,5 +66,12 @@ public class ListActionController implements ControllerInterface {
             });
             return row;
         });
+    }
+
+
+    public void actionBuySell() {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ActionBuySell.fxml"));
+
     }
 }
