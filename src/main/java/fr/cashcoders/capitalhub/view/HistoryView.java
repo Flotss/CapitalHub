@@ -2,7 +2,6 @@ package fr.cashcoders.capitalhub.view;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.controller.Model;
-import fr.cashcoders.capitalhub.model.Observable;
 import javafx.scene.control.Label;
 
 public class HistoryView implements Observer {
@@ -21,7 +20,7 @@ public class HistoryView implements Observer {
 
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update() {
 
     }
 }

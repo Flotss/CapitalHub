@@ -33,6 +33,7 @@ public class Transaction implements DBInterface {
         }
     }
 
+
     @Override
     public void save() throws SQLException {
         String insertQuery = "INSERT INTO transaction (idportefeuille, idaction, price, date, codecurrency, type) "

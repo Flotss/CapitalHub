@@ -7,7 +7,7 @@ import javafx.scene.chart.LineChart;
 
 import java.util.List;
 
-public class LineChartHome {
+public class LineChartHome implements ControllerInterface {
 
     private final Model model;
     @FXML

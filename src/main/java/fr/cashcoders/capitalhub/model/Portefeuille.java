@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Portefeuille implements Observable, DBInterface {
+public class Portefeuille implements DBInterface {
+    private int id;
     private final int idUser;
     private final String name;
     private final String description;
@@ -16,7 +17,6 @@ public class Portefeuille implements Observable, DBInterface {
     private final List<Transaction> transactions;
     private final List<History> history;
     private final List<Observer> observers = new ArrayList<>();
-    private int id;
 
     public Portefeuille(int id, int idUser, String name, String description) {
         this.id = id;
@@ -30,6 +30,27 @@ public class Portefeuille implements Observable, DBInterface {
         if (this.id == 0) {
             this.save();
         }
+    }
+
+    public Portefeuille(User user, String name, String description) {
+        this.idUser = user.getId();
+        this.name = name;
+        this.description = description;
+        this.actionsProducts = new ArrayList<>();
+        this.transactions = new ArrayList<>();
+        this.history = new ArrayList<>();
+        save();
+    }
+
+    // CLONE CONSTRUCTOR
+    public Portefeuille(Portefeuille portefeuille) {
+        this.idUser = 0;
+        this.name = portefeuille.getName();
+        this.description = portefeuille.getDescription();
+        this.actionsProducts = new ArrayList<>();
+        this.transactions = new ArrayList<>();
+        this.history = new ArrayList<>();
+        save();
     }
 
     public int getId() {
@@ -88,23 +109,6 @@ public class Portefeuille implements Observable, DBInterface {
 
     public void addHistory(History history) {
         this.history.add(history);
-    }
-
-    @Override
-    public void addObserver(Observer o) {
-        this.observers.add(o);
-    }
-
-    @Override
-    public void removeObserver(Observer o) {
-        this.observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer o : this.observers) {
-            o.update(this, null);
-        }
     }
 
     public double getLastValue() {

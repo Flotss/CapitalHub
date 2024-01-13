@@ -5,7 +5,7 @@ import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 
-public class PieChartController {
+public class PieChartController implements ControllerInterface {
     private final Model model;
     private Portefeuille portefeuille;
 

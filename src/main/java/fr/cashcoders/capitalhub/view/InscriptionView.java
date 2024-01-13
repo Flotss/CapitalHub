@@ -1,11 +1,10 @@
 package fr.cashcoders.capitalhub.view;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
-import fr.cashcoders.capitalhub.model.Observable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
-public class InscriptionView implements Observer {
+public class InscriptionView {
 
 
     public void show() {
@@ -23,10 +22,5 @@ public class InscriptionView implements Observer {
         }
 
         CapitalHubApp.changeScene(root);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
     }
 }

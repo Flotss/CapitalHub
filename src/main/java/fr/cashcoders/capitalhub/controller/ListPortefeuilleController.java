@@ -12,7 +12,7 @@ import javafx.scene.input.MouseButton;
 
 import java.util.List;
 
-public class ListPortefeuilleController {
+public class ListPortefeuilleController implements ControllerInterface {
 
     private final Model model;
     @FXML

@@ -1,34 +1,40 @@
 package fr.cashcoders.capitalhub.view;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
+import fr.cashcoders.capitalhub.controller.ControllerInterface;
 import fr.cashcoders.capitalhub.controller.ListActionController;
 import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.controller.PieChartController;
-import fr.cashcoders.capitalhub.model.Observable;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class PortefeuilleDetailsView implements Observer {
 
     private final Model model;
     private final Portefeuille portefeuille;
+    private List<ControllerInterface> controllers;
 
 
     public PortefeuilleDetailsView(Model model, Portefeuille portefeuille) {
         this.model = model;
         this.portefeuille = portefeuille;
+        model.setObserver(this);
     }
 
     public void show() {
         // PieChart for actions fXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ActionPieChart.fxml"));
-        loader.setController(new PieChartController(model, portefeuille));
+        ControllerInterface controllerPieChart = new PieChartController(model, portefeuille);
+        loader.setController(controllerPieChart);
 
 
         // Action scrollPane fXML
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("ListActions.fxml"));
-        loader2.setController(new ListActionController(model, portefeuille));
+        ControllerInterface controllerListActions = new ListActionController(model, portefeuille);
+        loader2.setController(controllerListActions);
 
 
         VBox root = new VBox();
@@ -43,7 +49,9 @@ public class PortefeuilleDetailsView implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update() {
+        for (ControllerInterface controller : controllers) {
+            controller.refresh();
+        }
     }
 }

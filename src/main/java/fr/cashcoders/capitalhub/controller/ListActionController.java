@@ -11,7 +11,7 @@ import javafx.scene.control.TableView;
 
 import java.util.List;
 
-public class ListActionController {
+public class ListActionController implements ControllerInterface {
 
     private final Model model;
     private final Portefeuille portefeuille;

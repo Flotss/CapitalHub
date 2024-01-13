@@ -1,30 +1,38 @@
 package fr.cashcoders.capitalhub.view;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
+import fr.cashcoders.capitalhub.controller.ControllerInterface;
 import fr.cashcoders.capitalhub.controller.LineChartHome;
 import fr.cashcoders.capitalhub.controller.ListPortefeuilleController;
 import fr.cashcoders.capitalhub.controller.Model;
-import fr.cashcoders.capitalhub.model.Observable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class MainView implements Observer {
 
     private final Model model;
+    private List<ControllerInterface> controllers;
 
     public MainView(Model model) {
         this.model = model;
+        model.setObserver(this);
     }
 
     public void show() {
         // Line cart fXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LineChartHome.fxml"));
-        loader.setController(new LineChartHome(model));
+        ControllerInterface controllerLineChart = new LineChartHome(model);
+        loader.setController(controllerLineChart);
 
 
         // ListPortefeuille fXML
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("ListPortefeuille.fxml"));
-        loader2.setController(new ListPortefeuilleController(model));
+        ControllerInterface controllerListPortefeuille = new ListPortefeuilleController(model);
+        loader2.setController(controllerListPortefeuille);
+
+        controllers = List.of(controllerLineChart, controllerListPortefeuille);
 
 
         VBox root = new VBox();
@@ -39,7 +47,9 @@ public class MainView implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update() {
+        for (ControllerInterface controller : controllers) {
+            controller.refresh();
+        }
     }
 }
