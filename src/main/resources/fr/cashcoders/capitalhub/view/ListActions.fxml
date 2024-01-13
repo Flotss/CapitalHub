@@ -16,7 +16,7 @@
                 </Label>
                 <Separator opacity="0.0" prefWidth="200.0"/>
                 <Separator opacity="0.0" prefWidth="200.0"/>
-                <Button mnemonicParsing="false" onAction="#refresh" text="Refresh"/>
+                <Button mnemonicParsing="false" onAction="#refresh" text="Actualiser"/>
             </children>
             <BorderPane.margin>
                 <Insets top="16.0"/>
