@@ -5,18 +5,29 @@ drop table if exists Currency;
 drop table if exists ActionProduit;
 drop table if exists Action;
 drop table if exists Portefeuille;
+drop table if exists UserTable;
 
+CREATE SEQUENCE if not exists user_id_sequence START 1;
 CREATE SEQUENCE if not exists portefeuille_id_sequence START 1;
 CREATE SEQUENCE if not exists actions_id_sequence START 1;
 CREATE SEQUENCE if not exists actionproduit_id_sequence START 1;
 CREATE SEQUENCE if not exists transaction_id_sequence START 1;
 CREATE SEQUENCE if not exists history_id_sequence START 1;
 
+ALTER SEQUENCE user_id_sequence RESTART WITH 1;
 ALTER SEQUENCE portefeuille_id_sequence RESTART WITH 1;
 ALTER SEQUENCE actions_id_sequence RESTART WITH 1;
 ALTER SEQUENCE actionproduit_id_sequence RESTART WITH 1;
 ALTER SEQUENCE transaction_id_sequence RESTART WITH 1;
 ALTER SEQUENCE history_id_sequence RESTART WITH 1;
+
+CREATE TABLE IF NOT EXISTS UserTable
+(
+    id       INT DEFAULT nextval('user_id_sequence') NOT NULL,
+    username VARCHAR(255)                            NOT NULL,
+    password VARCHAR(255)                            NOT NULL,
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE IF NOT EXISTS Portefeuille
 (
@@ -24,8 +35,10 @@ CREATE TABLE IF NOT EXISTS Portefeuille
     idUser      INT                                             NOT NULL,
     name        VARCHAR(255)                                    NOT NULL,
     description VARCHAR(255),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (idUser) REFERENCES UserTable (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS Action
 (

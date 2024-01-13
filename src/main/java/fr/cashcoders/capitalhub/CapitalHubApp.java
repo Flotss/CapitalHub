@@ -2,6 +2,8 @@ package fr.cashcoders.capitalhub;
 
 import fr.cashcoders.capitalhub.controller.MenuController;
 import fr.cashcoders.capitalhub.controller.Model;
+import fr.cashcoders.capitalhub.model.User;
+import fr.cashcoders.capitalhub.view.ConnectionView;
 import fr.cashcoders.capitalhub.view.HistoryView;
 import fr.cashcoders.capitalhub.view.MainView;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
@@ -51,13 +53,13 @@ public class CapitalHubApp extends Application {
         primaryStage.show();
 
         primaryStage.setWidth(625);
-        primaryStage.setHeight(root.getHeight() + menuBar.getHeight());
+        primaryStage.setHeight(1000);
     }
 
-    private void initializeUI() {
+    public static void initializeUI(User user) {
         Model model = null;
         try {
-            model = new Model();
+            model = new Model(user);
         } catch (SQLException e) {
             System.err.println("Error with database connection" + e.getMessage());
         }
@@ -66,10 +68,15 @@ public class CapitalHubApp extends Application {
         mainView.show();
     }
 
+    private void connectionUI() {
+        ConnectionView connectionView = new ConnectionView();
+        connectionView.show();
+    }
+
     @Override
     public void start(Stage stage) {
         CapitalHubApp.primaryStage = stage;
-        initializeUI();
+        connectionUI();
     }
 
     public void start() {

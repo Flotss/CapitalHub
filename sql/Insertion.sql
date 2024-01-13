@@ -9,6 +9,12 @@ values ('Buy');
 insert into TransactionType (transactionType)
 values ('Sell');
 
+INSERT INTO usertable (username, password)
+VALUES ('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08');
+INSERT INTO usertable (username, password)
+VALUES ('test2', '60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752');
+
+
 INSERT INTO Portefeuille
 (iduser, name, description)
 VALUES (1, 'TestPorteFeuille', 'Mon Test de portefeuille');
@@ -98,16 +104,6 @@ INSERT INTO History (idPortefeuille, idAction, price, date)
 VALUES (1, 3, 5000, '2024-01-12 13:20:00');
 INSERT INTO History (idPortefeuille, idAction, price, date)
 VALUES (1, 3, 4000, '2024-01-12 14:10:00');
-
-select *
-from History
-where idPortefeuille = 1
-  and idAction = 2
-order by date desc;
-delete
-from History
-where idPortefeuille = 1 and idAction = 2
-   or idAction = 3;
 
 
 

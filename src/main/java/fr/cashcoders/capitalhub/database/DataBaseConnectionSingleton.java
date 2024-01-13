@@ -11,7 +11,7 @@ public class DataBaseConnectionSingleton {
     private static final String POSTGRES_URL = dotenv.get("POSTGRES_URL");
     private static final String POSTGRES_USER = dotenv.get("POSTGRES_USER");
     private static final String POSTGRES_PASSWORD = dotenv.get("POSTGRES_PASSWORD");
-    private static DataBaseConnectionSingleton instance = null;
+    private static DataBaseConnectionSingleton instance = getInstance();
     private Connection connection = null;
 
     private DataBaseConnectionSingleton() {

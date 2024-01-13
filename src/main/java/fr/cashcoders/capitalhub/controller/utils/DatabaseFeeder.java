@@ -17,10 +17,10 @@ public class DatabaseFeeder {
     private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
     private static final List<Action> actions = new ArrayList<>();
 
-    public static void load(List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
+    public static void load(User user, List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading database...");
 
-        loadPortefeuilles(portefeuilles, connection);
+        loadPortefeuilles(user, portefeuilles, connection);
         loadCurrencies(currencies, connection);
         saveActions();
         
@@ -34,9 +34,10 @@ public class DatabaseFeeder {
         logger.info("Done saving actions");
     }
 
-    private static void loadPortefeuilles(List<Portefeuille> portefeuilles, Connection connection) throws SQLException {
+    private static void loadPortefeuilles(User user, List<Portefeuille> portefeuilles, Connection connection) throws SQLException {
         logger.info("Loading portefeuilles...");
-        PreparedStatement portefeuilleStatement = connection.prepareStatement("SELECT * FROM portefeuille");
+        PreparedStatement portefeuilleStatement = connection.prepareStatement("SELECT * FROM portefeuille WHERE iduser = ?");
+        portefeuilleStatement.setInt(1, user.getId());
         ResultSet portefeuilleResultSet = portefeuilleStatement.executeQuery();
 
         while (portefeuilleResultSet.next()) {

@@ -24,7 +24,7 @@ public class Model {
 
     public final static List<Action> actions = new ArrayList<>();
 
-
+    private User user;
     private final List<Portefeuille> portefeuilles;
     private final MainView mainView = CapitalHubApp.mainView;
     private final PortefeuilleDetailsView portefeuilleDetailsView = CapitalHubApp.portefeuilleDetailsView;
@@ -34,11 +34,12 @@ public class Model {
     private Currency currency;
     private APIActionScheduler apiActionScheduler;
 
-    public Model() throws SQLException {
+    public Model(User user) throws SQLException {
+        this.user = user;
         this.portefeuilles = new ArrayList<>();
         this.currencies = new ArrayList<>();
 
-        DatabaseFeeder.load(portefeuilles, currencies, connection);
+        DatabaseFeeder.load(user, portefeuilles, currencies, connection);
         this.currency = currencies.get(0);
         apiActionScheduler = new APIActionScheduler(this);
 //        apiActionScheduler.run();
@@ -62,15 +63,6 @@ public class Model {
 //        portefeuilles.add(clone);
 //        this.addEvent(new Event("Portefeuille " + portefeuille.getName() + " cloned"), portefeuille);
 //    }
-
-    public void showMainView() {
-        mainView.show();
-    }
-
-
-    public void showHistoryView() {
-        historyView.show();
-    }
 
     public List<Portefeuille> getPortefeuilles() {
         return portefeuilles;
