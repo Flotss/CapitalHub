@@ -108,4 +108,8 @@ public class CapitalHubApp extends Application {
     public void start() {
         launch();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
