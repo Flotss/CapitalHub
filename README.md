@@ -19,9 +19,11 @@ Le projet est organisé comme suit :
 
 ## Utilisation
 1. Clonez le projet depuis le référentiel.
-2. Exécutez les scripts SQL dans le dossier `sql` pour créer la base de données et insérer des données de test.
-3. Configurez la connexion à la base de données dans `DataBaseConnectionSingleton.java`.
-4. Exécutez `Application.java` pour démarrer l'application.
+2. Exécutez `Application.java` pour démarrer l'application.
+
+ou bien
+
+Exécuter le fichier .jar qui se trouve dans `jar/Capital-hub-1.0.jar`
 
 ## Fonctionnalités
 - Création et gestion de portefeuilles d'actions et de crypto-monnaies.
@@ -30,12 +32,6 @@ Le projet est organisé comme suit :
 - Gestion des transactions.
 
 ## Auteurs
-Ce projet a été développé par [Votre Nom] et [Le Nom de Votre Collaborateur] dans le cadre de [Nom du Projet ou de la Cours].
-
-## License
-Ce projet est sous licence [Licence], voir le fichier `LICENSE.md` pour plus de détails.
-
-## Remarques
-Assurez-vous d'avoir correctement configuré les dépendances JavaFX pour exécuter l'application. Pour toute question ou commentaire, veuillez nous contacter à [votre@email.com].
+Ce projet a été développé par `Florian MANGIN` et `Pierre Massy` dans le cadre du projet du Module II.1102 – Algorithmique et Programmation de l'[ISEP](https://www.isep.fr/).
 
 **Enjoy using CapitalHub!**
