@@ -5,10 +5,10 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Action implements DBInterface {
-    private String name;
+    private final String name;
     private int id;
     private double price;
-    private String symbol;
+    private final String symbol;
     // TODO API URL
 
     public Action(int id, String name, double price, String symbol) {
@@ -98,5 +98,10 @@ public class Action implements DBInterface {
     @Override
     public int hashCode() {
         return Objects.hash(name, id, price);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -2,19 +2,19 @@ package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.model.ActionProduit;
 import fr.cashcoders.capitalhub.model.Portefeuille;
-import fr.cashcoders.capitalhub.model.User;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 public class ListActionController implements ControllerInterface {
@@ -30,35 +30,6 @@ public class ListActionController implements ControllerInterface {
         this.portefeuille = portefeuille;
     }
 
-    public static void main(String[] args) throws SQLException {
-        User user = new User(1, "Test");
-        Model model = new Model(user);
-        Portefeuille portefeuille = model.getPortefeuille("TestPorteFeuille");
-
-
-        Stage stage = new Stage();
-        stage.setTitle("Menu principal");
-
-        FXMLLoader loader = new FXMLLoader(ListActionController.class.getResource("../view/BuySellForm.fxml"));
-        loader.setController(new BuySellController(model, portefeuille));
-
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (Exception e) {
-            System.out.println(ListActionController.class.getResource("MainView.fxml"));
-        }
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void refresh() {
-        Platform.runLater(() -> {
-            updateLineChart();
-        });
-    }
 
     public void updateLineChart() {
         tableViewActions.getItems().clear();
@@ -108,22 +79,30 @@ public class ListActionController implements ControllerInterface {
         refresh();
     }
 
-    public void actionBuySell() {
+    @FXML
+    public void refresh() {
+        Platform.runLater(() -> {
+            updateLineChart();
+        });
+    }
+
+    public void actionBuySell() throws MalformedURLException {
         Stage stage = new Stage();
-        stage.setTitle("Acheter / Vendre");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/cashcoders/capitalhub/view/BuySellForm.fxml"));
+        loader.setController(new BuySellFormController(model, portefeuille, stage));
 
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/BuySellForm.fxml"));
-//        loader.setController(new BuySellController(model, portefeuille));
-//
-//
-//        Scene scene = null;
-//        try {
-//            scene = new Scene(loader.load());
-//        } catch (Exception e) {
-//            System.out.println(getClass().getResource("BuySellForm.fxml"));
-//        }
 
-//        stage.setScene(scene);
-        stage.show();
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Acheter / Vendre");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(getClass().getResource(""));
+        }
+
     }
 }

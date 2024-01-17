@@ -10,6 +10,7 @@ import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,8 @@ public class Model {
     private final List<Portefeuille> portefeuilles;
     private final List<Currency> currencies;
     private final Connection connection = DataBaseConnectionSingleton.getInstance().getConnection();
-    private Currency currency;
     private final APIActionScheduler apiActionScheduler;
-
+    private Currency currency;
     private Observer observer = null;
 
     public Model(User user) throws SQLException {
@@ -36,7 +36,7 @@ public class Model {
         this.currency = currencies.get(0);
 
         apiActionScheduler = new APIActionScheduler(this);
-//        apiActionScheduler.run();
+        apiActionScheduler.run();
     }
 
     public void createPortefeuille(String name, String description) {
@@ -144,5 +144,26 @@ public class Model {
             System.out.println("notifyObserver2");
             observer.update();
         }
+    }
+
+    public void makeTransaction(Portefeuille portefeuille, Action action, TransactionType type, double value, double quantity) {
+        Transaction transaction = new Transaction(0, portefeuille, action, value, LocalDateTime.now(), currency.code(), type);
+        portefeuille.addTransaction(transaction);
+
+
+        ActionProduit actionProduit = portefeuille.getActionProduit(action);
+        if (actionProduit == null) {
+            actionProduit = new ActionProduit(action, portefeuille, 0);
+            portefeuille.addActionProduit(actionProduit);
+        }
+        if (type == TransactionType.BUY) {
+            actionProduit.setQuantity(actionProduit.getQuantity() + quantity);
+        } else {
+            actionProduit.setQuantity(actionProduit.getQuantity() - quantity);
+        }
+
+        new History(portefeuille, action, actionProduit.getQuantity() * action.getPrice());
+
+        notifyObserver();
     }
 }

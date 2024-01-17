@@ -1,17 +1,17 @@
 package fr.cashcoders.capitalhub.model;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.logging.Logger;
 
 public class History implements DBInterface {
-    private int id;
     private final Portefeuille portefeuille;
     private final Action action;
     private final double price;
     private final LocalDateTime date;
+    private int id;
 
 
     public History(int id, Portefeuille portefeuille, Action action, double price, LocalDateTime date) {
@@ -21,13 +21,8 @@ public class History implements DBInterface {
         this.price = price;
         this.date = date;
 
-        if (this.id == 0) {
-            try {
-                save();
-            } catch (SQLException e) {
-                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
-            }
-        }
+        if (this.id == 0)
+            save();
     }
 
     public History(Portefeuille portefeuille, Action action, double price) {
@@ -36,15 +31,29 @@ public class History implements DBInterface {
 
 
     @Override
-    public void save() throws SQLException {
-        String query = "INSERT INTO history (idAction, price, date) VALUES (?, ?, ?) RETURNING id";
+    public void save() {
+        try {
+            if (this.id == 0) {
+                insert();
+            } else {
+                update();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, this.action.getId());
-            preparedStatement.setDouble(2, this.price);
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(this.date));
+    public void insert() throws SQLException {
+        String insertQuery = "INSERT INTO history (idportefeuille ,idAction, price, date) VALUES (? ,?, ?, ?) RETURNING id";
 
-            var resultSet = preparedStatement.executeQuery();
+        try (var preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setInt(1, this.portefeuille.getId());
+            preparedStatement.setInt(2, this.action.getId());
+            preparedStatement.setDouble(3, this.price);
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(this.date));
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 this.id = resultSet.getInt("id");
@@ -57,10 +66,9 @@ public class History implements DBInterface {
     public void update() throws SQLException {
         String query = "UPDATE history SET price = ?, date = ? WHERE id = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, this.action.getId());
-            preparedStatement.setDouble(2, this.price);
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(this.date));
-            preparedStatement.setInt(4, this.id);
+            preparedStatement.setDouble(1, this.price);
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(this.date));
+            preparedStatement.setInt(3, this.id);
             preparedStatement.executeUpdate();
         }
     }

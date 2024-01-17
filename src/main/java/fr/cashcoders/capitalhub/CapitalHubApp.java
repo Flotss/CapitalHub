@@ -61,7 +61,7 @@ public class CapitalHubApp extends Application {
         primaryStage.show();
 
         primaryStage.setWidth(625);
-        primaryStage.setHeight(1000);
+        primaryStage.setHeight(900);
     }
 
     /**
@@ -79,6 +79,10 @@ public class CapitalHubApp extends Application {
         } catch (SQLException e) {
             System.err.println("Error with database connection" + e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**
@@ -107,9 +111,5 @@ public class CapitalHubApp extends Application {
      */
     public void start() {
         launch();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

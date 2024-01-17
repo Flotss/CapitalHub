@@ -27,11 +27,11 @@ public class DataBaseConnectionSingleton {
         return InstanceHolder.instance;
     }
 
-    private static final class InstanceHolder {
-        private static final DataBaseConnectionSingleton instance = new DataBaseConnectionSingleton();
-    }
-
     public Connection getConnection() {
         return getInstance().connection;
+    }
+
+    private static final class InstanceHolder {
+        private static final DataBaseConnectionSingleton instance = new DataBaseConnectionSingleton();
     }
 }

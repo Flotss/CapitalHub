@@ -39,8 +39,8 @@ public class DatabaseFeeder {
         loadPortefeuilles(user, portefeuilles, connection);
         loadCurrencies(currencies, connection);
         loadActions();
-        
-        
+
+
         logger.info("Done loading portefeuilles and currencies");
     }
 
@@ -74,9 +74,9 @@ public class DatabaseFeeder {
     /**
      * Loads user portefeuilles from the database and populates the 'portefeuilles' list.
      *
-     * @param user        The user for whom portefeuilles are loaded.
+     * @param user          The user for whom portefeuilles are loaded.
      * @param portefeuilles A list of Portefeuille objects to be loaded and populated.
-     * @param connection  The database connection to be used for loading data.
+     * @param connection    The database connection to be used for loading data.
      * @throws SQLException If an SQL exception occurs while loading portefeuilles from the database.
      */
     private static void loadPortefeuilles(User user, List<Portefeuille> portefeuilles, Connection connection) throws SQLException {
@@ -105,7 +105,7 @@ public class DatabaseFeeder {
      * Loads ActionProduits for a given Portefeuille from the database and populates the Portefeuille object.
      *
      * @param portefeuille The Portefeuille object for which ActionProduits are loaded and populated.
-     * @param connection  The database connection to be used for loading data.
+     * @param connection   The database connection to be used for loading data.
      * @throws SQLException If an SQL exception occurs while loading ActionProduits from the database.
      */
     private static void loadActionProduits(Portefeuille portefeuille, Connection connection) throws SQLException {

@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Portefeuille implements DBInterface {
-    private int id;
     private final int idUser;
-    private String name;
-    private String description;
     private final List<ActionProduit> actionsProducts;
     private final List<Transaction> transactions;
     private final List<History> history;
+    private int id;
+    private String name;
+    private String description;
 
     public Portefeuille(int id, int idUser, String name, String description) {
         this.id = id;
@@ -64,13 +64,13 @@ public class Portefeuille implements DBInterface {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setName(String name) {
         this.name = name;
         update();
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
@@ -231,4 +231,15 @@ public class Portefeuille implements DBInterface {
                 ", actions=" + actionsProducts +
                 '}';
     }
+
+    public ActionProduit getActionProduit(Action action) {
+        for (ActionProduit actionProduit : actionsProducts) {
+            if (actionProduit.getAction().equals(action)) {
+                return actionProduit;
+            }
+        }
+        return null;
+
+    }
+
 }

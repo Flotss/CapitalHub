@@ -4,27 +4,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
             prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             fx:controller="fr.cashcoders.capitalhub.controller.InscriptionController">
     <center>
         <HBox alignment="CENTER" prefHeight="248.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                <VBox alignment="CENTER" prefHeight="232.0" prefWidth="489.0">
-                        <HBox alignment="CENTER" prefHeight="47.0" prefWidth="489.0" spacing="20.0">
-                                <Label text="Nom d'utilisateur"/>
-                                <TextField fx:id="username"/>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="187.0" prefHeight="47.0" prefWidth="489.0"
-                              spacing="40.0">
-                                <Label text="Mot de passe"/>
-                                <PasswordField fx:id="password"/>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" prefHeight="47.0" prefWidth="489.0"
-                              spacing="40.0">
-                                <Button mnemonicParsing="false" onAction="#connection" text="Vous avez déja un compte"/>
-                                <Button mnemonicParsing="false" onAction="#inscription" text="Incription"/>
-                        </HBox>
-                </VBox>
+            <VBox alignment="CENTER" prefHeight="232.0" prefWidth="489.0">
+                <HBox alignment="CENTER" prefHeight="47.0" prefWidth="489.0" spacing="20.0">
+                    <Label text="Nom d'utilisateur"/>
+                    <TextField fx:id="username"/>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="187.0" prefHeight="47.0" prefWidth="489.0"
+                      spacing="40.0">
+                    <Label text="Mot de passe"/>
+                    <PasswordField fx:id="password"/>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" prefHeight="47.0" prefWidth="489.0"
+                      spacing="40.0">
+                    <Button mnemonicParsing="false" onAction="#connection" text="Vous avez déja un compte"/>
+                    <Button mnemonicParsing="false" onAction="#inscription" text="Incription"/>
+                </HBox>
+            </VBox>
         </HBox>
     </center>
     <top>

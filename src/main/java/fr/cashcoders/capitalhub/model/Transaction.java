@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 public class Transaction implements DBInterface {
-    private int id;
     private final Portefeuille portefeuille;
     private final Action action;
     private final double prix;
     private final LocalDateTime date;
     private final String codecurrency;
     private final TransactionType type;
+    private int id;
 
     public Transaction(int id, Portefeuille portefeuille, Action action, double prix, LocalDateTime date,
                        String codecurrency, TransactionType type) {
@@ -24,25 +24,12 @@ public class Transaction implements DBInterface {
         this.date = date;
         this.codecurrency = codecurrency;
         this.type = type;
-
-        if (id == 0) {
-            try {
-                save();
-            } catch (SQLException e) {
-                Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
-            }
-        }
+        save();
     }
 
 
-    @Override
-    public void save() throws SQLException {
-        String insertQuery = "INSERT INTO transaction (idportefeuille, idaction, price, date, codecurrency, type) "
-                + "VALUES (?, ?, ?, ?, ?, ?) "
-                + "ON CONFLICT (idportefeuille, idaction) DO UPDATE SET "
-                + "prix = EXCLUDED.price, date = EXCLUDED.date, codecurrency = EXCLUDED.codecurrency, "
-                + "type = EXCLUDED.type "
-                + "RETURNING id;";
+    public void insert() throws SQLException {
+        String insertQuery = "INSERT INTO transaction (idportefeuille, idaction, price, date, codecurrency, type) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 
         try (var preparedStatement = connection.prepareStatement(insertQuery)) {
             preparedStatement.setInt(1, this.portefeuille.getId());
@@ -57,6 +44,19 @@ public class Transaction implements DBInterface {
             if (resultSet.next()) {
                 this.id = resultSet.getInt("id");
             }
+        }
+    }
+
+    @Override
+    public void save() {
+        try {
+            if (this.id == 0) {
+                insert();
+            } else {
+                update();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
         }
     }
 

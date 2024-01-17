@@ -5,9 +5,9 @@ values ('USD', 'Dollar', '$');
 
 
 insert into TransactionType (transactionType)
-values ('Buy');
+values ('BUY');
 insert into TransactionType (transactionType)
-values ('Sell');
+values ('SELL');
 
 INSERT INTO usertable (username, password)
 VALUES ('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08');
@@ -43,22 +43,22 @@ values ('The Walt Disney Company', 90, 'DIS');
 
 -- Portefeuille 1 achète 10 Bitcoins
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (1, 1, 10000 * 10, '2024-01-01 10:00:00', 'EUR', 'Buy');
+VALUES (1, 1, 10000 * 10, '2024-01-01 10:00:00', 'EUR', 'BUY');
 
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (1, 2, 1000 * 15, '2024-01-02 10:00:00', 'EUR', 'Buy');
+VALUES (1, 2, 1000 * 15, '2024-01-02 10:00:00', 'EUR', 'BUY');
 
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (1, 1, 10500 * 5, '2024-01-03 10:00:00', 'EUR', 'Sell');
+VALUES (1, 1, 10500 * 5, '2024-01-03 10:00:00', 'EUR', 'SELL');
 
 
 -- Portefeuille 2 achète 20 Tesla
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (2, 4, 133.11 * 20, '2024-01-01 10:00:00', 'USD', 'Buy');
+VALUES (2, 4, 133.11 * 20, '2024-01-01 10:00:00', 'USD', 'BUY');
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (2, 3, 233.96 * 30, '2024-01-02 10:00:00', 'USD', 'Buy');
+VALUES (2, 3, 233.96 * 30, '2024-01-02 10:00:00', 'USD', 'BUY');
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)
-VALUES (2, 3, 240.00 * 10, '2024-01-03 10:00:00', 'USD', 'Sell');
+VALUES (2, 3, 240.00 * 10, '2024-01-03 10:00:00', 'USD', 'SELL');
 
 
 -- Mise à jour pour le Bitcoin dans le Portefeuille 1 (10 achetés, 5 vendus)

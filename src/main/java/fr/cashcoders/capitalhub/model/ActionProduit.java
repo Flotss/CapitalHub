@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 public class ActionProduit implements DBInterface {
     private final Action action;
     private final Portefeuille portefeuille;
-    private final double quantity;
+    private double quantity;
 
     public ActionProduit(Action action, Portefeuille portefeuille, double quantity) {
         this.portefeuille = portefeuille;
@@ -24,6 +24,15 @@ public class ActionProduit implements DBInterface {
 
     public double getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+        try {
+            update();
+        } catch (SQLException e) {
+            Logger.getLogger(this.getClass().getName()).warning(e.getMessage());
+        }
     }
 
     public Action getAction() {

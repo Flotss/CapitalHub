@@ -39,7 +39,7 @@ public class APIFinnhubFetcher implements APIFetcherInterface {
                 continue;
             }
 
-            String apiURL = new String();
+            String apiURL = "";
             apiURL = urlString.replaceFirst("INSERTSYMBOL", action.getSymbol());
 
             URL url = new URL(apiURL);

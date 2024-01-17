@@ -206,7 +206,6 @@ public class ListPortefeuilleController implements ControllerInterface {
         hBox2.setAlignment(Pos.CENTER);
 
 
-
         VBox layout = new VBox();
         layout.getChildren().addAll(hBox, hBox2, buttonCreate, info);
         layout.setAlignment(Pos.CENTER);

@@ -33,6 +33,7 @@ public class PieChartController implements ControllerInterface {
 
     private void updatePieChart() {
         this.actionsPieChart.getData().clear();
+        this.totalValue = totalValue();
         for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
             double valueTronque = (actionProduit.getActionValue() * 100);
             double pourcentage = (valueTronque / totalValue);
@@ -50,6 +51,7 @@ public class PieChartController implements ControllerInterface {
                 data.getNode().setScaleY(1);
             });
         }
+
     }
 
     private double totalValue() {

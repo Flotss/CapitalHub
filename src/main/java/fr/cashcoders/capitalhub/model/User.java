@@ -7,21 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class User implements DBInterface {
-    private int id;
     private final String username;
+    private int id;
 
 
     public User(int id, String username) {
         this.id = id;
         this.username = username;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public static User getUserFromDB(String username, String password) throws SQLException {
@@ -50,6 +42,13 @@ public class User implements DBInterface {
         return null;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public void save() throws SQLException {
