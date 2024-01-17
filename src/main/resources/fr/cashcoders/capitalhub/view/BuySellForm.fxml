@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="314.0" prefWidth="497.0" spacing="20.0"
+      xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="fr.cashcoders.capitalhub.controller.BuySellController">
+    <opaqueInsets>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+    </opaqueInsets>
+    <children>
+        <Label text="Acheter ou vendre une action">
+            <font>
+                <Font name="JetBrains Mono ExtraBold ExtBd Nerd Font Complete Mono" size="23.0"/>
+            </font>
+        </Label>
+        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="397.0" spacing="70.0">
+            <children>
+                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="208.0" spacing="10.0">
+                    <children>
+                        <Label text="Action : "/>
+                        <ChoiceBox fx:id="choiceBoxAction" prefWidth="150.0"/>
+                    </children>
+                </HBox>
+                <Label fx:id="labelActionValue" text="valeur"/>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="60.0" layoutY="109.0" prefHeight="35.0" prefWidth="397.0" spacing="94.0">
+            <children>
+                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="208.0" spacing="10.0">
+                    <children>
+                        <Label text="Type : "/>
+                        <ChoiceBox fx:id="choiceBoxType" prefWidth="150.0"/>
+                    </children>
+                </HBox>
+                <Label/>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="60.0" layoutY="154.0" prefHeight="35.0" prefWidth="397.0" spacing="110.0">
+            <children>
+                <HBox alignment="CENTER" prefHeight="25.0" prefWidth="229.0" spacing="10.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="57.0" text="Quantité : "/>
+                        <TextField onInputMethodTextChanged="#input" prefHeight="25.0" prefWidth="153.0"/>
+                    </children>
+                </HBox>
+                <Label/>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#cancel" text="Annuler"/>
+                <Button mnemonicParsing="false" onAction="#makeTransaction" text="Effectuer la transaction "/>
+            </children>
+        </HBox>
+        <Label fx:id="infoLabel"/>
+    </children>
+    <padding>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+    </padding>
+</VBox>

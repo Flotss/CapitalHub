@@ -24,17 +24,6 @@ public class PieChartController implements ControllerInterface {
     @FXML
     public void initialize() {
         refresh();
-
-        for (PieChart.Data data : actionsPieChart.getData()) {
-            data.getNode().setOnMouseEntered(event -> {
-                data.getNode().setScaleX(1.1);
-                data.getNode().setScaleY(1.1);
-            });
-            data.getNode().setOnMouseExited(event -> {
-                data.getNode().setScaleX(1);
-                data.getNode().setScaleY(1);
-            });
-        }
     }
 
     @FXML
@@ -49,6 +38,17 @@ public class PieChartController implements ControllerInterface {
             double pourcentage = (valueTronque / totalValue);
 
             this.actionsPieChart.getData().add(new PieChart.Data(actionProduit.getActionName() + " / " + String.format("%.2f", pourcentage) + "%", actionProduit.getActionValue() / totalValue * 100));
+        }
+
+        for (PieChart.Data data : actionsPieChart.getData()) {
+            data.getNode().setOnMouseEntered(event -> {
+                data.getNode().setScaleX(1.1);
+                data.getNode().setScaleY(1.1);
+            });
+            data.getNode().setOnMouseExited(event -> {
+                data.getNode().setScaleX(1);
+                data.getNode().setScaleY(1);
+            });
         }
     }
 

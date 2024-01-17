@@ -35,10 +35,6 @@ public class PortefeuilleDetailsView implements Observer {
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("ListActions.fxml"));
         ControllerInterface controllerListActions = new ListActionController(model, portefeuille);
         loader2.setController(controllerListActions);
-
-        controllers = List.of(controllerPieChart, controllerListActions);
-
-
         VBox root = new VBox();
         try {
             root.getChildren().add(loader.load());
@@ -47,6 +43,7 @@ public class PortefeuilleDetailsView implements Observer {
             throw new RuntimeException(e);
         }
 
+        controllers = List.of(controllerPieChart, controllerListActions);
         CapitalHubApp.changeScene(root);
     }
 

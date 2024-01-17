@@ -36,7 +36,7 @@ public class Model {
         this.currency = currencies.get(0);
 
         apiActionScheduler = new APIActionScheduler(this);
-        apiActionScheduler.run();
+//        apiActionScheduler.run();
     }
 
     public void createPortefeuille(String name, String description) {
