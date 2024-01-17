@@ -74,7 +74,6 @@ public class ListPortefeuilleController implements ControllerInterface {
         MenuItem ModifierItemMenu = new MenuItem("Modifier");
 
         ouvrirItemMenu.setOnAction(event -> {
-            System.out.println("Ouvrir");
             PortefeuilleDetailsView portefeuilleDetailsView = new PortefeuilleDetailsView(model, selectedPortefeuille);
             portefeuilleDetailsView.show();
         });
@@ -219,7 +218,7 @@ public class ListPortefeuilleController implements ControllerInterface {
                 info.setStyle("-fx-text-fill: red");
             } else {
                 model.createPortefeuille(textFieldName.getText(), textFieldDescription.getText());
-                model.notifyObserver();
+                refresh();
 
                 info.setText("Portefeuille créé");
                 info.setStyle("-fx-text-fill: green");

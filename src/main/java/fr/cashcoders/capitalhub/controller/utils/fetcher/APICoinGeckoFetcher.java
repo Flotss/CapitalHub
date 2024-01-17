@@ -41,9 +41,6 @@ public class APICoinGeckoFetcher implements APIFetcherInterface {
         // PROPERLY PRINT DATA
         Logger logger = Logger.getLogger("APICoinGeckoFetcher");
         logger.info("APICoinGeckoFetcher: " + dataMap.size() + " actions fetched");
-        dataMap.forEach((key, value) -> System.out.println(key + " : " + value));
-
-
         return dataMap;
     }
 

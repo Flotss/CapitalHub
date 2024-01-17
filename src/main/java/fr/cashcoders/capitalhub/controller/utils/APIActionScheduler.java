@@ -36,8 +36,6 @@ public class APIActionScheduler {
                 new APIFinnhubFetcher(),
                 new APICoinGeckoFetcher()
         );
-
-
     }
 
 

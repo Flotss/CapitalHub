@@ -57,6 +57,10 @@ public class ActionProduit implements DBInterface {
         return action.getPrice() * this.quantity;
     }
 
+    public double getValue() {
+        return this.action.getPrice() * this.quantity;
+    }
+
 
     @Override
     public void save() throws SQLException {

@@ -9,9 +9,8 @@ import fr.cashcoders.capitalhub.view.MainView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -39,16 +38,14 @@ public class CapitalHubApp extends Application {
         VBox root = new VBox();
 
         MenuController menuController = new MenuController();
+        HBox menu = new HBox();
+        Button homeButton = new Button("Accueil");
+        homeButton.setOnAction(menuController);
+        Button historyButton = new Button("Historique");
+        historyButton.setOnAction(menuController);
+        menu.getChildren().addAll(homeButton, historyButton);
+        root.getChildren().add(menu);
 
-        MenuItem accueilItem = new MenuItem("Accueil");
-        accueilItem.setOnAction(menuController);
-        MenuItem historyItem = new MenuItem("Historique");
-        historyItem.setOnAction(menuController);
-        Menu menu = new Menu("View");
-        menu.getItems().addAll(accueilItem, historyItem);
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu);
-        root.getChildren().add(menuBar);
 
         // Pane for parent
         Pane pane = new Pane();
@@ -62,6 +59,14 @@ public class CapitalHubApp extends Application {
 
         primaryStage.setWidth(625);
         primaryStage.setHeight(900);
+    }
+
+    private static Button createButtonSquareNoStyle(String text) {
+        Button button = new Button(text);
+        button.setPrefWidth(100);
+        button.setPrefHeight(100);
+        button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 20px;");
+        return button;
     }
 
     /**
@@ -102,8 +107,6 @@ public class CapitalHubApp extends Application {
     public void start(Stage stage) {
         CapitalHubApp.primaryStage = stage;
         connectionUI();
-
-//        initializeUI(new User(1, "test"));
     }
 
     /**

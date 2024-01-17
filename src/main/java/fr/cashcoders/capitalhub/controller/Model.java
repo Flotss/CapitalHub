@@ -4,6 +4,7 @@ import fr.cashcoders.capitalhub.controller.aggregator.DataAggregator;
 import fr.cashcoders.capitalhub.controller.utils.APIActionScheduler;
 import fr.cashcoders.capitalhub.controller.utils.DatabaseFeeder;
 import fr.cashcoders.capitalhub.database.DataBaseConnectionSingleton;
+import fr.cashcoders.capitalhub.exception.TransactionException;
 import fr.cashcoders.capitalhub.model.*;
 import fr.cashcoders.capitalhub.view.Observer;
 import javafx.scene.chart.XYChart;
@@ -114,20 +115,23 @@ public class Model {
     }
 
     public void updateActions(Map<String, Double> actions) {
-        List<Action> actionsAlreadyUpdated = new ArrayList<>();
+        List<Action> actionsToUpdate = Model.actions;
+        for (Action action : actionsToUpdate) {
+            if (actions.containsKey(action.getSymbol())) {
+                try {
+                    action.setPrice(actions.get(action.getSymbol()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
         for (Portefeuille portefeuille : portefeuilles) {
             for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
                 Action action = actionProduit.getAction();
-                if (actions.containsKey(action.getSymbol()) && !actionsAlreadyUpdated.contains(action)) {
-                    try {
-                        Double price = actions.get(action.getSymbol());
-                        action.setPrice(price);
-                        new History(portefeuille, action, price);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    actionsAlreadyUpdated.add(action);
-                }
+                Double price = action.getPrice();
+                new History(portefeuille, action, price);
             }
         }
         notifyObserver();
@@ -139,14 +143,21 @@ public class Model {
 
 
     public void notifyObserver() {
-        System.out.println("notifyObserver1");
         if (observer != null) {
-            System.out.println("notifyObserver2");
             observer.update();
         }
     }
 
-    public void makeTransaction(Portefeuille portefeuille, Action action, TransactionType type, double value, double quantity) {
+    public void makeTransaction(Portefeuille portefeuille, Action action, TransactionType type, double value, double quantity) throws TransactionException {
+        // Verifier qu'on ne vend pas une action qu'on a pas
+        if (type == TransactionType.SELL) {
+            ActionProduit actionProduit = portefeuille.getActionProduit(action);
+            if (actionProduit == null || actionProduit.getQuantity() < quantity) {
+                throw new TransactionException("Vous ne pouvez pas vendre une action que vous n'avez pas");
+            }
+        }
+
+
         Transaction transaction = new Transaction(0, portefeuille, action, value, LocalDateTime.now(), currency.code(), type);
         portefeuille.addTransaction(transaction);
 
@@ -160,6 +171,12 @@ public class Model {
             actionProduit.setQuantity(actionProduit.getQuantity() + quantity);
         } else {
             actionProduit.setQuantity(actionProduit.getQuantity() - quantity);
+        }
+
+
+        // If quantity is 0, delete the actionProduit
+        if (actionProduit.getQuantity() == 0) {
+            portefeuille.removeActionProduit(actionProduit);
         }
 
         new History(portefeuille, action, actionProduit.getQuantity() * action.getPrice());

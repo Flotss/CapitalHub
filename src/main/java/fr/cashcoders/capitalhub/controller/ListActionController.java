@@ -101,7 +101,6 @@ public class ListActionController implements ControllerInterface {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(getClass().getResource(""));
         }
 
     }

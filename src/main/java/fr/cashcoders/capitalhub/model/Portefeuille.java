@@ -4,9 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Portefeuille implements DBInterface {
     private final int idUser;
@@ -82,6 +80,15 @@ public class Portefeuille implements DBInterface {
         return actionsProducts;
     }
 
+    public void removeActionProduit(ActionProduit actionProduit) {
+        try {
+            actionProduit.delete();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        this.actionsProducts.remove(actionProduit);
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
@@ -121,27 +128,11 @@ public class Portefeuille implements DBInterface {
     }
 
     public double getLastValue() {
-        Map<LocalDate, Map<Action, Integer>> dateToActionValue = new HashMap<>();
-        LocalDate lastDate = LocalDate.MIN;
-        for (History h : this.history) {
-            LocalDate date = h.getDate().toLocalDate();
-            int price = (int) h.getPrice();
-
-
-            // Get or create the map of actions for the given date
-            Map<Action, Integer> actionValue = dateToActionValue.computeIfAbsent(date, k -> new HashMap<>());
-
-            // Add the value to the action for the given date
-            actionValue.put(h.getAction(), price);
-
-            if (date.isAfter(lastDate)) {
-                lastDate = date;
-                dateToActionValue.put(date, actionValue);
-            }
+        double value = 0;
+        for (ActionProduit actionProduit : actionsProducts) {
+            value += actionProduit.getValue();
         }
-
-        // Get the last value, if there is no value, return 0
-        return dateToActionValue.getOrDefault(lastDate, new HashMap<>()).values().stream().mapToInt(Integer::intValue).sum();
+        return value;
     }
 
     public double getValeur() {

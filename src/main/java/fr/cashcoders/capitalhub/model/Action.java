@@ -6,9 +6,9 @@ import java.util.logging.Logger;
 
 public class Action implements DBInterface {
     private final String name;
+    private final String symbol;
     private int id;
     private double price;
-    private final String symbol;
     // TODO API URL
 
     public Action(int id, String name, double price, String symbol) {

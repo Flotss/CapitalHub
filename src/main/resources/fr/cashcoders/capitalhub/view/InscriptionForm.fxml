@@ -23,7 +23,8 @@
                 <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" prefHeight="47.0" prefWidth="489.0"
                       spacing="40.0">
                     <Button mnemonicParsing="false" onAction="#connection" text="Vous avez déja un compte"/>
-                    <Button mnemonicParsing="false" onAction="#inscription" text="Incription"/>
+                    <Button fx:id="inscriptionButton" mnemonicParsing="false" onAction="#inscription"
+                            text="Inscription"/>
                 </HBox>
             </VBox>
         </HBox>

@@ -4,6 +4,7 @@ import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.model.User;
 import fr.cashcoders.capitalhub.view.ConnectionView;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -21,8 +22,13 @@ public class InscriptionController {
     @FXML
     private Label error;
 
+    @FXML
+    private Button inscriptionButton;
+
     public void inscription() throws SQLException {
+        inscriptionButton.setDisable(true);
         if (!verifyFields()) {
+            inscriptionButton.setDisable(false);
             return;
         }
 
@@ -31,27 +37,17 @@ public class InscriptionController {
             user = User.getUserFromDB(username.getText(), password.getText());
         } catch (SQLException e) {
             error.setText("Erreur : " + e.getMessage());
+            inscriptionButton.setDisable(false);
         }
 
         if (user != null) {
-            System.out.println("User found");
             error.setText("Il existe déjà un utilisateur avec ce nom");
+            inscriptionButton.setDisable(false);
         } else {
             user = User.insertNewUser(username.getText(), password.getText());
             CapitalHubApp.initializeUI(user);
         }
     }
-
-    private User createUser() {
-        User user = null;
-        try {
-            user = User.getUserFromDB(username.getText(), password.getText());
-        } catch (SQLException e) {
-            error.setText("Erreur : " + e.getMessage());
-        }
-        return user;
-    }
-
 
     public void connection() {
         ConnectionView connectionView = new ConnectionView();

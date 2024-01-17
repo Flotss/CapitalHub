@@ -36,9 +36,9 @@ public class DatabaseFeeder {
     public static void load(User user, List<Portefeuille> portefeuilles, List<Currency> currencies, Connection connection) throws SQLException {
         logger.info("Loading database...");
 
+        loadActions();
         loadPortefeuilles(user, portefeuilles, connection);
         loadCurrencies(currencies, connection);
-        loadActions();
 
 
         logger.info("Done loading portefeuilles and currencies");
@@ -61,10 +61,7 @@ public class DatabaseFeeder {
             String actionSymbol = actionResultSet.getString("symbol");
 
             Action action = new Action(actionId, actionName, actionValue, actionSymbol);
-
-            if (!isInActions(action)) {
-                actions.add(action);
-            }
+            actions.add(action);
         }
 
         logger.info("Done loading actions");
@@ -154,21 +151,6 @@ public class DatabaseFeeder {
         return action;
     }
 
-
-    /**
-     * Checks if an Action object is already in the 'actions' list.
-     *
-     * @param action The Action object to be checked.
-     * @return True if the Action is in the list, otherwise false.
-     */
-    private static boolean isInActions(Action action) {
-        for (Action actionItem : actions) {
-            if (actionItem.equals(actionItem)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Loads transactions for a given Portefeuille from the database and populates the Portefeuille object.

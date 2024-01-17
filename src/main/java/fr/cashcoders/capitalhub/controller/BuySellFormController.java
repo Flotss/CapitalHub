@@ -1,6 +1,8 @@
 package fr.cashcoders.capitalhub.controller;
 
+import fr.cashcoders.capitalhub.exception.TransactionException;
 import fr.cashcoders.capitalhub.model.Action;
+import fr.cashcoders.capitalhub.model.ActionProduit;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import fr.cashcoders.capitalhub.model.TransactionType;
 import javafx.fxml.FXML;
@@ -38,8 +40,6 @@ public class BuySellFormController {
     public BuySellFormController(Model model, Portefeuille portefeuille, Stage stage) {
         this.model = model;
         this.portefeuille = portefeuille;
-        System.out.println(portefeuille);
-
         this.stage = stage;
     }
 
@@ -56,6 +56,9 @@ public class BuySellFormController {
         // Type
         choiceBoxType.getItems().addAll(BUY, SELL);
         choiceBoxType.getSelectionModel().selectFirst();
+        choiceBoxType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            setLabelActionValueFromType();
+        });
 
         // Quantity
         textFieldQuantity.setText("0");
@@ -81,7 +84,6 @@ public class BuySellFormController {
                 textFieldQuantity.setText("0");
             }
         } catch (NumberFormatException ignored) {
-            System.out.println("Not a number");
         }
 
         setLabelActionValue();
@@ -90,6 +92,16 @@ public class BuySellFormController {
     private void setLabelActionValue() {
         String formattedValue = String.format("%.2f", choiceBoxAction.getValue().getPrice() * Double.parseDouble(textFieldQuantity.getText()));
         labelActionValue.setText(formattedValue + "€");
+    }
+
+    private void setLabelActionValueFromType() {
+        if (choiceBoxType.getValue() == SELL) {
+            ActionProduit actionProduit = portefeuille.getActionProduit(choiceBoxAction.getValue());
+            double quantity = actionProduit == null ? 0 : actionProduit.getQuantity();
+            textFieldQuantity.setText(String.valueOf(quantity));
+        } else {
+            setLabelActionValue();
+        }
     }
 
     public void cancel() {
@@ -108,7 +120,11 @@ public class BuySellFormController {
         }
         String formattedPrice = String.format("%.2f", price);
         infoLabel.setText("Transaction effectuée pour " + formattedPrice + "€");
-        model.makeTransaction(portefeuille, choiceBoxAction.getValue(), choiceBoxType.getValue(), price, quantity);
+        try {
+            model.makeTransaction(portefeuille, choiceBoxAction.getValue(), choiceBoxType.getValue(), price, quantity);
+        } catch (TransactionException e) {
+            infoLabel.setText(e.getMessage());
+        }
     }
 
 
