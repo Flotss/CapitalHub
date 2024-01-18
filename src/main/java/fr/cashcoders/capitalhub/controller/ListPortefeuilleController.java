@@ -60,7 +60,6 @@ public class ListPortefeuilleController implements ControllerInterface {
 
     private void updateTableViewPortefeuille() {
         tableViewPortefeuille.getItems().clear();
-// Clear the existing data
 
         // Get the data from the model and add it to the TableView
         List<Portefeuille> portefeuilles = model.getPortefeuilles();

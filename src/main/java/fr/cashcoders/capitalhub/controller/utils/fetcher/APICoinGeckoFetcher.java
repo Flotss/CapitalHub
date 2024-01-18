@@ -32,10 +32,9 @@ public class APICoinGeckoFetcher implements APIFetcherInterface {
         }.getType();
         List<Currency> currencies = gson.fromJson(new String(responseStream.readAllBytes()), currencyListType);
 
-        // Convert List<Currency> to Map<String, Double>
         Map<String, Double> dataMap = new HashMap<>();
         for (Currency data : currencies) {
-            dataMap.put(data.symbol.toUpperCase(), data.current_price);
+            dataMap.put(data.symbol.toUpperCase(), data.current_price * 1.09);
         }
 
         // PROPERLY PRINT DATA

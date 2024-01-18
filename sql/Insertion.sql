@@ -22,11 +22,11 @@ INSERT INTO Portefeuille (iduser, name, description)
 VALUES (1, 'TestPorteFeuille2', 'Mon Test de portefeuille2');
 
 insert into Action (name, value, symbol)
-values ('Bitcoin', 38917, '');
+values ('Bitcoin', 38917, 'BTC');
 insert into Action (name, value, symbol)
-values ('Ethereum', 2311.94, '');
+values ('Ethereum', 2311.94, 'ETH');
 insert into Action(name, value, symbol)
-values ('Solana', 95.57, '');
+values ('Solana', 95.57, 'SOL');
 insert into Action (name, value, symbol)
 values ('Tesla', 218.89, 'TSLA');
 insert into Action (name, value, symbol)
@@ -39,7 +39,6 @@ insert into Action (name, value, symbol)
 values ('Netflix', 492.18, 'NFLX');
 insert into Action (name, value, symbol)
 values ('The Walt Disney Company', 90, 'DIS');
-
 
 -- Portefeuille 1 achète 10 Bitcoins
 INSERT INTO Transaction (idPortefeuille, idAction, price, date, codeCurrency, type)

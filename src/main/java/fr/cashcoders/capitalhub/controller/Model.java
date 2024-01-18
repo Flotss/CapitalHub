@@ -34,7 +34,7 @@ public class Model {
         this.currencies = new ArrayList<>();
 
         DatabaseFeeder.load(user, portefeuilles, currencies, connection);
-        this.currency = currencies.get(0);
+        this.currency = currencies.get(1);
 
         apiActionScheduler = new APIActionScheduler(this);
         apiActionScheduler.run();
@@ -131,7 +131,7 @@ public class Model {
             for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
                 Action action = actionProduit.getAction();
                 Double price = action.getPrice();
-                new History(portefeuille, action, price);
+                portefeuille.addHistory(new History(portefeuille, action, price * actionProduit.getQuantity()));
             }
         }
         notifyObserver();
@@ -179,7 +179,7 @@ public class Model {
             portefeuille.removeActionProduit(actionProduit);
         }
 
-        new History(portefeuille, action, actionProduit.getQuantity() * action.getPrice());
+        portefeuille.addHistory(new History(portefeuille, action, actionProduit.getQuantity() * action.getPrice()));
 
         notifyObserver();
     }

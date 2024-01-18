@@ -91,7 +91,7 @@ public class BuySellFormController {
 
     private void setLabelActionValue() {
         String formattedValue = String.format("%.2f", choiceBoxAction.getValue().getPrice() * Double.parseDouble(textFieldQuantity.getText()));
-        labelActionValue.setText(formattedValue + "€");
+        labelActionValue.setText(formattedValue + "$");
     }
 
     private void setLabelActionValueFromType() {
@@ -119,7 +119,7 @@ public class BuySellFormController {
             price *= -1;
         }
         String formattedPrice = String.format("%.2f", price);
-        infoLabel.setText("Transaction effectuée pour " + formattedPrice + "€");
+        infoLabel.setText("Transaction effectuée pour " + formattedPrice + "$");
         try {
             model.makeTransaction(portefeuille, choiceBoxAction.getValue(), choiceBoxType.getValue(), price, quantity);
         } catch (TransactionException e) {
