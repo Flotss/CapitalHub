@@ -19,7 +19,9 @@ Le projet est organisé comme suit :
 
 ## Utilisation
 1. Clonez le projet depuis le référentiel.
-2. Exécutez `Application.java` pour démarrer l'application.
+2. Importez le projet dans votre IDE de préférence IntelliJ IDEA.
+3. Configurez le projet pour utiliser JavaFX.
+4. Exécutez `Application.java` pour démarrer l'application.
 
 ou bien
 
@@ -30,6 +32,8 @@ Exécuter le fichier .jar qui se trouve dans `jar/Capital-hub-1.0.jar`
 - Visualisation de graphiques pour suivre les performances.
 - Connexion sécurisée et inscription d'utilisateurs.
 - Gestion des transactions.
+- Achat et vente d'actions et de crypto-monnaies.
+- Utilisation d'API pour récupérer les données des actions et des crypto-monnaies.
 
 ## Auteurs
 Ce projet a été développé par `Florian MANGIN` et `Pierre Massy` dans le cadre du projet du Module II.1102 – Algorithmique et Programmation de l'[ISEP](https://www.isep.fr/).
