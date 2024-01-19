@@ -2,6 +2,7 @@ package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.model.ActionProduit;
 import fr.cashcoders.capitalhub.model.Portefeuille;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 
@@ -38,8 +39,10 @@ public class PieChartController implements ControllerInterface {
 
     @FXML
     public void refresh() {
-        this.totalValue = totalValue();
+        Platform.runLater(this::updatePieChart);
+    }
 
+    private void updatePieChart() {
         this.actionsPieChart.getData().clear();
         for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
             double valueTronque = (actionProduit.getActionValue() * 100);

@@ -2,6 +2,7 @@ package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.model.Period;
 import fr.cashcoders.capitalhub.model.Portefeuille;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 
@@ -26,6 +27,10 @@ public class LineChartHomeController implements ControllerInterface {
 
     @FXML
     public void refresh() {
+        Platform.runLater(this::updateLineChart);
+    }
+
+    private void updateLineChart() {
         if (!lineChart.getData().isEmpty()) {
             lineChart.getData().removeAll(lineChart.getData());
         }

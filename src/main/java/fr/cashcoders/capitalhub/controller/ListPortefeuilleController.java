@@ -3,6 +3,7 @@ package fr.cashcoders.capitalhub.controller;
 import fr.cashcoders.capitalhub.model.Portefeuille;
 import fr.cashcoders.capitalhub.view.PortefeuilleDetailsView;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
@@ -54,6 +55,10 @@ public class ListPortefeuilleController implements ControllerInterface {
 
     @FXML
     public void refresh() {
+        Platform.runLater(this::updateTableViewPortefeuille);
+    }
+
+    private void updateTableViewPortefeuille() {
         tableViewPortefeuille.getItems().clear();
 // Clear the existing data
 
@@ -105,7 +110,6 @@ public class ListPortefeuilleController implements ControllerInterface {
             HBox hboxDescription = new HBox(labelDescription, textFieldDescription);
             hboxDescription.setSpacing(10);
             hboxDescription.setAlignment(Pos.CENTER);
-
 
 
             VBox layout = new VBox();

@@ -2,6 +2,7 @@ package fr.cashcoders.capitalhub.controller;
 
 import fr.cashcoders.capitalhub.model.ActionProduit;
 import fr.cashcoders.capitalhub.model.Portefeuille;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
@@ -51,6 +52,13 @@ public class ListActionController implements ControllerInterface {
 
     @FXML
     public void refresh() {
+        Platform.runLater(() -> {
+            updateLineChart();
+        });
+
+    }
+
+    public void updateLineChart() {
         tableViewActions.getItems().clear();
 
         List<ActionProduit> actionProduits = portefeuille.getActionsProducts();

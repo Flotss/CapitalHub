@@ -23,10 +23,6 @@ public class APIFinnhubFetcher implements APIFetcherInterface {
     private static final String API_FINNHUB_URL = "https://finnhub.io/api/v1/quote?symbol=INSERTSYMBOL&token=INSERTAPI";
     private static final String FINNHUB_API_KEY = dotenv.get("FINNHUB_API_KEY");
 
-    public static void main(String[] args) throws IOException {
-        new APIFinnhubFetcher().fetch();
-    }
-
     public Map<String, Double> fetch() throws IOException {
         List<Action> actions = Model.actions;
 
@@ -39,6 +35,10 @@ public class APIFinnhubFetcher implements APIFetcherInterface {
 
 
         for (Action action : actions) {
+            if (action.getSymbol().isEmpty()) {
+                continue;
+            }
+
             String apiURL = new String();
             apiURL = urlString.replaceFirst("INSERTSYMBOL", action.getSymbol());
 
@@ -68,14 +68,14 @@ public class APIFinnhubFetcher implements APIFetcherInterface {
     // {"c":2.26,"d":0,"dp":0,"h":2.3393,"l":2.24,"o":2.27,"pc":2.26,"t":1705093202}
 
     class APIFinnhubFetcherData {
-        double c;
-        double d;
-        double dp;
-        double h;
-        double l;
-        double o;
-        double pc;
-        double t;
+        public double c;
+        public double d;
+        public double dp;
+        public double h;
+        public double l;
+        public double o;
+        public double pc;
+        public double t;
 
         @Override
         public String toString() {

@@ -19,5 +19,8 @@ module fr.cashcoders.capitalhub {
     opens fr.cashcoders.capitalhub.controller to javafx.fxml;
     exports fr.cashcoders.capitalhub.controller;
 
+    opens fr.cashcoders.capitalhub.controller.utils.fetcher to com.google.gson;
+    exports fr.cashcoders.capitalhub.controller.utils.fetcher;
+
 
 }

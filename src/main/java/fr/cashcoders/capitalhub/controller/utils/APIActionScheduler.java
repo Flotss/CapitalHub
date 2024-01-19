@@ -31,12 +31,13 @@ public class APIActionScheduler {
     public APIActionScheduler(Model model) {
         this.model = model;
         this.executor = new ScheduledThreadPoolExecutor(1);
+        this.setSettings();
         this.fetchers = List.of(
                 new APIFinnhubFetcher(),
                 new APICoinGeckoFetcher()
         );
 
-        this.setSettings();
+
     }
 
 
@@ -46,18 +47,20 @@ public class APIActionScheduler {
      */
     public void run() {
         // Run every minute
-        executor.schedule(() -> {
+        executor.scheduleAtFixedRate(() -> {
             Map<String, Double> actions = new HashMap<>();
             try {
                 for (APIFetcherInterface fetcher : fetchers) {
+                    System.out.println("Fetching data from " + fetcher.getClass().getSimpleName() + "...");
                     actions.putAll(fetcher.fetch());
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
             model.updateActions(actions);
 
-        }, 1, TimeUnit.MINUTES);
+        }, 0, 1, TimeUnit.MINUTES);
     }
 
     /**

@@ -1,5 +1,6 @@
 package fr.cashcoders.capitalhub.controller.utils;
 
+import fr.cashcoders.capitalhub.controller.Model;
 import fr.cashcoders.capitalhub.model.*;
 
 import java.sql.Connection;
@@ -7,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -21,7 +21,7 @@ import static fr.cashcoders.capitalhub.model.DBInterface.connection;
 public class DatabaseFeeder {
 
     private static final Logger logger = Logger.getLogger(DatabaseFeeder.class.getName());
-    private static final List<Action> actions = new ArrayList<>();
+    private static final List<Action> actions = Model.actions;
 
 
     /**
