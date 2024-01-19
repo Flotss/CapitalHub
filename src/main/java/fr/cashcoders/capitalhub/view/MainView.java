@@ -2,7 +2,7 @@ package fr.cashcoders.capitalhub.view;
 
 import fr.cashcoders.capitalhub.CapitalHubApp;
 import fr.cashcoders.capitalhub.controller.ControllerInterface;
-import fr.cashcoders.capitalhub.controller.LineChartHome;
+import fr.cashcoders.capitalhub.controller.LineChartHomeController;
 import fr.cashcoders.capitalhub.controller.ListPortefeuilleController;
 import fr.cashcoders.capitalhub.controller.Model;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +23,7 @@ public class MainView implements Observer {
     public void show() {
         // Line cart fXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LineChartHome.fxml"));
-        ControllerInterface controllerLineChart = new LineChartHome(model);
+        ControllerInterface controllerLineChart = new LineChartHomeController(model);
         loader.setController(controllerLineChart);
 
 

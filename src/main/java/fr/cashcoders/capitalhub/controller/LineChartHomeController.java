@@ -7,7 +7,7 @@ import javafx.scene.chart.LineChart;
 
 import java.util.List;
 
-public class LineChartHome implements ControllerInterface {
+public class LineChartHomeController implements ControllerInterface {
 
     private final Model model;
     @FXML
@@ -15,7 +15,7 @@ public class LineChartHome implements ControllerInterface {
 
     private Period filter = Period.MONTH;
 
-    public LineChartHome(Model model) {
+    public LineChartHomeController(Model model) {
         this.model = model;
     }
 
