@@ -14,8 +14,6 @@ public class DailyAggregator implements AggregatorStrategy {
     @Override
     public void aggregate(List<History> histories, Map<LocalDateTime, Integer> data) {
         Map<LocalDateTime, Map<Action, Integer>> hourActionValues = new HashMap<>();
-        LocalDateTime currentHour = null;
-
 
         // Agrégation des données
         for (History h : histories) {
@@ -27,17 +25,11 @@ public class DailyAggregator implements AggregatorStrategy {
             if (date.getDayOfYear() == LocalDate.now().getDayOfYear() && date.getYear() == LocalDate.now().getYear()) {
                 LocalDateTime hourKey = date.withMinute(0).withSecond(0).withNano(0);
 
-
-                if (!hourKey.equals(currentHour)) {
-                    currentHour = hourKey;
-                    hourActionValues.clear(); // Réinitialise la carte pour la nouvelle heure
-                }
-
                 // Obtient ou crée la carte des actions pour l'heure donnée
                 Map<Action, Integer> actionMap = hourActionValues.computeIfAbsent(hourKey, k -> new HashMap<>());
 
                 // Additionne la valeur à l'action spécifique pour cette heure
-                actionMap.put(action, value);
+                actionMap.merge(action, value, Integer::sum);
 
                 // Calcule la somme totale pour l'heure et met à jour la carte `data`
                 data.put(hourKey, actionMap.values().stream().mapToInt(Integer::intValue).sum());

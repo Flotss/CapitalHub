@@ -14,7 +14,6 @@ public class MonthlyAggregator implements AggregatorStrategy {
     @Override
     public void aggregate(List<History> histories, Map<LocalDateTime, Integer> data) {
         Map<LocalDateTime, Map<Action, Integer>> dailyActionValues = new HashMap<>();
-        LocalDateTime currentDay = null;
 
         // Agrégation des données
         for (History h : histories) {
@@ -26,23 +25,17 @@ public class MonthlyAggregator implements AggregatorStrategy {
             if (date.getYear() == LocalDate.now().getYear() && date.getMonth() == LocalDate.now().getMonth()) {
                 LocalDateTime dayKey = date.withHour(0).withMinute(0).withSecond(0).withNano(0);
 
-                if (!dayKey.equals(currentDay)) {
-                    currentDay = dayKey;
-                    dailyActionValues.clear();
-                }
-
                 // Obtient ou crée la carte des actions pour le jour donné
                 Map<Action, Integer> actionMap = dailyActionValues.computeIfAbsent(dayKey, k -> new HashMap<>());
 
                 // Additionne la valeur à l'action spécifique pour ce jour
-                actionMap.put(action, value);
+                actionMap.merge(action, value, Integer::sum);
 
                 // Calcule la somme totale pour le jour et met à jour la carte `data`
                 data.put(dayKey, actionMap.values().stream().mapToInt(Integer::intValue).sum());
             }
         }
     }
-
 
     @Override
     public Period getPeriod() {

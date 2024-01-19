@@ -120,7 +120,9 @@ public class Model {
                 Action action = actionProduit.getAction();
                 if (actions.containsKey(action.getName()) && !actionsAlreadyUpdated.contains(action)) {
                     try {
-                        action.setPrice(actions.get(action.getName()));
+                        Double price = actions.get(action.getName());
+                        action.setPrice(price);
+                        createHistory(portefeuille, action, price);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -129,6 +131,10 @@ public class Model {
             }
         }
         notifyObserver();
+    }
+
+    public void createHistory(Portefeuille portefeuille, Action action, double price) {
+        History history = new History(portefeuille, action, price);
     }
 
     public void setObserver(Observer observer) {

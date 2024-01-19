@@ -49,7 +49,7 @@ public class DatabaseFeeder {
      *
      * @throws SQLException If an SQL exception occurs while loading actions from the database.
      */
-    private static void loadActions() throws SQLException {
+    public static void loadActions() throws SQLException {
         logger.info("Loading actions...");
         PreparedStatement actionStatement = connection.prepareStatement("SELECT * FROM action");
         ResultSet actionResultSet = actionStatement.executeQuery();
@@ -58,8 +58,9 @@ public class DatabaseFeeder {
             int actionId = actionResultSet.getInt("id");
             String actionName = actionResultSet.getString("name");
             double actionValue = actionResultSet.getDouble("value");
+            String actionSymbol = actionResultSet.getString("symbol");
 
-            Action action = new Action(actionId, actionName, actionValue);
+            Action action = new Action(actionId, actionName, actionValue, actionSymbol);
 
             if (!isInActions(action)) {
                 actions.add(action);
@@ -123,9 +124,10 @@ public class DatabaseFeeder {
                 int actionId2 = actionResultSet.getInt("id");
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
+                String actionSymbol = actionResultSet.getString("symbol");
 
                 // Recherche de l'action dans la liste sinon on la crée
-                Action action = recoverAction(actionId2, actionName, actionValue);
+                Action action = recoverAction(actionId2, actionName, actionValue, actionSymbol);
                 portefeuille.addActionProduit(new ActionProduit(action, portefeuille, quantity));
             }
         }
@@ -141,13 +143,13 @@ public class DatabaseFeeder {
      * @param value The value of the Action.
      * @return The recovered or newly created Action object.
      */
-    private static Action recoverAction(int id, String name, double value) {
+    private static Action recoverAction(int id, String name, double value, String symbol) {
         for (Action action : actions) {
             if (action.getId() == id) {
                 return action;
             }
         }
-        Action action = new Action(id, name, value);
+        Action action = new Action(id, name, value, symbol);
         actions.add(action);
         return action;
     }
@@ -195,8 +197,9 @@ public class DatabaseFeeder {
                 int actionId2 = actionResultSet.getInt("id");
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
+                String actionSymbol = actionResultSet.getString("symbol");
 
-                Action action = recoverAction(actionId2, actionName, actionValue);
+                Action action = recoverAction(actionId2, actionName, actionValue, actionSymbol);
                 portefeuille.addTransaction(new Transaction(transactionId, portefeuille, action, price, date, codeCurrency, TransactionType.fromString(type)));
             }
         }
@@ -229,8 +232,9 @@ public class DatabaseFeeder {
                 int actionId2 = actionResultSet.getInt("id");
                 String actionName = actionResultSet.getString("name");
                 double actionValue = actionResultSet.getDouble("value");
+                String actionSymbol = actionResultSet.getString("symbol");
 
-                Action action = recoverAction(actionId2, actionName, actionValue);
+                Action action = recoverAction(actionId2, actionName, actionValue, actionSymbol);
                 portefeuille.addHistory(new History(historyId, portefeuille, action, price, date));
             }
         }

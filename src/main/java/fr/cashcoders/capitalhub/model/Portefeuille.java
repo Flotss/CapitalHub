@@ -121,21 +121,27 @@ public class Portefeuille implements DBInterface {
     }
 
     public double getLastValue() {
-        Map<LocalDate, Integer> dateToTotalValue = new HashMap<>();
+        Map<LocalDate, Map<Action, Integer>> dateToActionValue = new HashMap<>();
         LocalDate lastDate = LocalDate.MIN;
         for (History h : this.history) {
             LocalDate date = h.getDate().toLocalDate();
             int price = (int) h.getPrice();
 
-            dateToTotalValue.put(date, dateToTotalValue.getOrDefault(date, 0) + price);
+
+            // Get or create the map of actions for the given date
+            Map<Action, Integer> actionValue = dateToActionValue.computeIfAbsent(date, k -> new HashMap<>());
+
+            // Add the value to the action for the given date
+            actionValue.put(h.getAction(), price);
 
             if (date.isAfter(lastDate)) {
                 lastDate = date;
+                dateToActionValue.put(date, actionValue);
             }
         }
 
         // Get the last value, if there is no value, return 0
-        return dateToTotalValue.getOrDefault(lastDate, 0);
+        return dateToActionValue.getOrDefault(lastDate, new HashMap<>()).values().stream().mapToInt(Integer::intValue).sum();
     }
 
     public double getValeur() {

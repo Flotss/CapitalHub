@@ -8,12 +8,14 @@ public class Action implements DBInterface {
     private String name;
     private int id;
     private double price;
+    private String symbol;
     // TODO API URL
 
-    public Action(int id, String name, double price) {
+    public Action(int id, String name, double price, String symbol) {
         this.name = name;
         this.id = id;
         this.price = price;
+        this.symbol = symbol;
 
         if (this.id == 0) {
             try {
@@ -42,15 +44,20 @@ public class Action implements DBInterface {
         update();
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
     @Override
     public void save() throws SQLException {
-        String query = "INSERT INTO action (id, name, value) VALUES (DEFAULT, ?, ?) " +
+        String query = "INSERT INTO action (id, name, value, symbol) VALUES (DEFAULT, ?, ?, ?) " +
                 "ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, value = EXCLUDED.value " +
                 "RETURNING id;";
 
         try (var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, this.name);
             preparedStatement.setDouble(2, this.price);
+            preparedStatement.setString(3, this.symbol);
 
             var resultSet = preparedStatement.executeQuery();
 

@@ -30,6 +30,10 @@ public class History implements DBInterface {
         }
     }
 
+    public History(Portefeuille portefeuille, Action action, double price) {
+        this(0, portefeuille, action, price, LocalDateTime.now());
+    }
+
 
     @Override
     public void save() throws SQLException {
