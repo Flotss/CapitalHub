@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS Action
     id    INT DEFAULT nextval('actions_id_sequence') NOT NULL,
     name  VARCHAR(225)                               NOT NULL,
     value FLOAT                                      NOT NULL,
+    symbol VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
