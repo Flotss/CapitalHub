@@ -34,9 +34,9 @@ public class Model {
 
         DatabaseFeeder.load(user, portefeuilles, currencies, connection);
         this.currency = currencies.get(0);
-        apiActionScheduler = new APIActionScheduler(this);
-//        apiActionScheduler.run();
 
+        apiActionScheduler = new APIActionScheduler(this);
+        apiActionScheduler.run();
     }
 
     public void createPortefeuille(String name, String description) {
@@ -118,11 +118,11 @@ public class Model {
         for (Portefeuille portefeuille : portefeuilles) {
             for (ActionProduit actionProduit : portefeuille.getActionsProducts()) {
                 Action action = actionProduit.getAction();
-                if (actions.containsKey(action.getName()) && !actionsAlreadyUpdated.contains(action)) {
+                if (actions.containsKey(action.getSymbol()) && !actionsAlreadyUpdated.contains(action)) {
                     try {
-                        Double price = actions.get(action.getName());
+                        Double price = actions.get(action.getSymbol());
                         action.setPrice(price);
-                        createHistory(portefeuille, action, price);
+                        new History(portefeuille, action, price);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -131,10 +131,6 @@ public class Model {
             }
         }
         notifyObserver();
-    }
-
-    public void createHistory(Portefeuille portefeuille, Action action, double price) {
-        History history = new History(portefeuille, action, price);
     }
 
     public void setObserver(Observer observer) {

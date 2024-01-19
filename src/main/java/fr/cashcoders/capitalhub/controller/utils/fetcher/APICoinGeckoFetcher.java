@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class APICoinGeckoFetcher implements APIFetcherInterface {
 
@@ -34,29 +35,34 @@ public class APICoinGeckoFetcher implements APIFetcherInterface {
         // Convert List<Currency> to Map<String, Double>
         Map<String, Double> dataMap = new HashMap<>();
         for (Currency data : currencies) {
-            dataMap.put(data.name, data.current_price);
+            dataMap.put(data.symbol.toUpperCase(), data.current_price);
         }
+
+        // PROPERLY PRINT DATA
+        Logger logger = Logger.getLogger("APICoinGeckoFetcher");
+        logger.info("APICoinGeckoFetcher: " + dataMap.size() + " actions fetched");
+        dataMap.forEach((key, value) -> System.out.println(key + " : " + value));
 
 
         return dataMap;
     }
 
     class Currency {
-        String id;
-        String symbol;
-        String name;
-        double current_price;
-        long market_cap;
-        long total_volume;
-        double high_24h;
-        double low_24h;
-        double price_change_24h;
-        double price_change_percentage_24h;
-        double market_cap_change_24h;
-        double market_cap_change_percentage_24h;
-        Double total_supply;
-        Double max_supply;
-        String last_updated;
+        public String id;
+        public String symbol;
+        public String name;
+        public double current_price;
+        public long market_cap;
+        public long total_volume;
+        public double high_24h;
+        public double low_24h;
+        public double price_change_24h;
+        public double price_change_percentage_24h;
+        public double market_cap_change_24h;
+        public double market_cap_change_percentage_24h;
+        public Double total_supply;
+        public Double max_supply;
+        public String last_updated;
     }
 
 

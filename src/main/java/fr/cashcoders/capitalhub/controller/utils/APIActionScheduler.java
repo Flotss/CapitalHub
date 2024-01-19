@@ -1,9 +1,9 @@
 package fr.cashcoders.capitalhub.controller.utils;
 
 import fr.cashcoders.capitalhub.controller.Model;
-import fr.cashcoders.capitalhub.controller.utils.fetcher.APIActionFetcher;
 import fr.cashcoders.capitalhub.controller.utils.fetcher.APICoinGeckoFetcher;
 import fr.cashcoders.capitalhub.controller.utils.fetcher.APIFetcherInterface;
+import fr.cashcoders.capitalhub.controller.utils.fetcher.APIFinnhubFetcher;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class APIActionScheduler {
         this.model = model;
         this.executor = new ScheduledThreadPoolExecutor(1);
         this.fetchers = List.of(
-                new APIActionFetcher(),
+                new APIFinnhubFetcher(),
                 new APICoinGeckoFetcher()
         );
 
