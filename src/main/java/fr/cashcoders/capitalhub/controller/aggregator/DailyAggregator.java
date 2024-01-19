@@ -28,7 +28,7 @@ public class DailyAggregator implements AggregatorStrategy {
                 // Obtient ou crée la carte des actions pour l'heure donnée
                 Map<Action, Integer> actionMap = hourActionValues.computeIfAbsent(hourKey, k -> new HashMap<>());
 
-                // Additionne la valeur à l'action spécifique pour cette heure
+                // Remplace la valeur de l'action pour cette heure car on veut la dernière valeur
                 actionMap.merge(action, value, Integer::sum);
 
                 // Calcule la somme totale pour l'heure et met à jour la carte `data`

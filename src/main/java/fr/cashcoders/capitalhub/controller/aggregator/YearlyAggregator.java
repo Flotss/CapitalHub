@@ -27,7 +27,7 @@ public class YearlyAggregator implements AggregatorStrategy {
                 // Obtient ou crée la carte des actions pour le mois donné
                 Map<Action, Integer> actionMap = monthActionValues.computeIfAbsent(monthKey, k -> new HashMap<>());
 
-                // Additionne la valeur à l'action spécifique pour ce mois
+                // Remplace la valeur de l'action pour ce mois car on veut la dernière valeur
                 actionMap.put(action, value);
 
                 // Calcule la somme totale pour le mois et met à jour la carte `data`

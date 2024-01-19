@@ -28,7 +28,7 @@ public class MonthlyAggregator implements AggregatorStrategy {
                 // Obtient ou crée la carte des actions pour le jour donné
                 Map<Action, Integer> actionMap = dailyActionValues.computeIfAbsent(dayKey, k -> new HashMap<>());
 
-                // Additionne la valeur à l'action spécifique pour ce jour
+                // Remplace la valeur de l'action pour ce jour car on veut la dernière valeur
                 actionMap.put(action, value);
 
                 // Calcule la somme totale pour le jour et met à jour la carte `data`
