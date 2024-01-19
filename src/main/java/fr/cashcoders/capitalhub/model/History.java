@@ -37,9 +37,7 @@ public class History implements DBInterface {
 
     @Override
     public void save() throws SQLException {
-        String query = "INSERT INTO history (idAction, price, date) VALUES (?, ?, ?) " +
-                "ON CONFLICT (idAction) DO UPDATE SET price = EXCLUDED.price " +
-                "RETURNING id;"; // Return the id from the history table
+        String query = "INSERT INTO history (idAction, price, date) VALUES (?, ?, ?) RETURNING id";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.action.getId());
